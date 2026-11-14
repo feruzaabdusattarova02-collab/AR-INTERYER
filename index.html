@@ -1,328 +1,174 @@
-
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AR Interyer Dizayni</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AR Interyer Dizayni</title>
+<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #eef2f7;
-        }
-
-        header {
-            background: #263b63;
-            color: white;
-            padding: 20px 10px;
-            text-align: center;
-        }
-
-        header h1 {
-            margin: 5px;
-            font-size: 30px;
-        }
-
-        header p {
-            font-size: 17px;
-        }
-
-        .panel {
-            background: white;
-            padding: 15px 8px;
-            text-align: center;
-        }
-
-        button {
-            background: #263b63;
-            color: white;
-            border: none;
-            border-radius: 9px;
-            padding: 13px 17px;
-            margin: 5px;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #4169a8;
-        }
-
-        #holat {
-            text-align: center;
-            padding: 15px;
-            color: #263b63;
-            font-weight: bold;
-            font-size: 17px;
-        }
-
-        .izoh {
-            text-align: center;
-            color: #555;
-            padding: 5px 15px;
-        }
-
-        a-scene {
-            width: 100%;
-            height: 65vh;
-            display: block;
-        }
-
-        footer {
-            text-align: center;
-            padding: 15px;
-            color: #555;
-        }
-    </style>
+<style>
+body { margin:0; font-family:Arial; background:#222; }
+#kamera {
+  position:fixed; inset:0; width:100%; height:100%;
+  object-fit:cover; display:none; z-index:0;
+}
+a-scene {
+  position:fixed !important; inset:0;
+  width:100%; height:100%; z-index:1;
+}
+#panel {
+  position:fixed; top:10px; left:0; right:0;
+  z-index:5; text-align:center; padding:10px;
+}
+button {
+  padding:10px 13px; margin:4px; border:0;
+  border-radius:8px; background:#0756b5;
+  color:white; font-size:14px;
+}
+h2 { color:white; text-shadow:1px 1px 4px black; }
+</style>
 </head>
 
 <body>
 
-<header>
-    <h1>AR INTERYER DIZAYNI</h1>
-    <p>Virtual mebellarni xonangizda joylashtiring</p>
-</header>
+<video id="kamera" autoplay playsinline muted></video>
 
-<div class="panel">
-    <button id="startButton">3D ko‘rinishni boshlash</button>
-    <button onclick="modelTanlash('divan')">Divan</button>
-    <button onclick="modelTanlash('stul')">Stul</button>
-    <button onclick="modelTanlash('stol')">Stol</button>
-    <button id="rotateButton">Burish</button>
-    <button id="scaleButton">Kattalashtirish</button>
-    <button id="deleteButton">O‘chirish</button>
-    <button id="clearButton">Tozalash</button>
+<div id="panel">
+<h2>AR INTERYER DIZAYNI</h2>
+<button onclick="kameraniYoq()">Kamerani yoqish</button>
+<button onclick="uchDRejim()">3D xona</button>
+<br>
+<button onclick="mebel('divan')">Divan</button>
+<button onclick="mebel('stul')">Stul</button>
+<button onclick="mebel('stol')">Stol</button>
+<br>
+<button onclick="burish()">Burish</button>
+<button onclick="kattalashtir()">Kattalashtirish</button>
+<button onclick="ochirish()">O‘chirish</button>
+<button onclick="tozalash()">Tozalash</button>
+<p id="xabar" style="color:white"></p>
 </div>
 
-<div id="holat">Kerakli mebelni tanlang.</div>
+<a-scene embedded
+ renderer="alpha:true; colorManagement:true"
+ vr-mode-ui="enabled:false">
 
-<p class="izoh">
-    3D ko‘rinishda mebellarni tanlang, burang va kattalashtiring.
-</p>
+ <a-entity id="xona">
+   <a-sky color="#b9dafa"></a-sky>
+   <a-plane rotation="-90 0 0" width="15" height="15"
+      color="#d9c5a3"></a-plane>
+   <a-plane position="0 2 -5" width="15" height="4"
+      color="#eeeeee"></a-plane>
+ </a-entity>
 
-<a-scene
-    embedded
-    vr-mode-ui="enabled: false"
-    renderer="colorManagement: true">
+ <a-entity light="type:ambient; intensity:1"></a-entity>
+ <a-entity light="type:directional; intensity:1"
+    position="-2 4 3"></a-entity>
 
-    <a-sky color="#eaf0f8"></a-sky>
-
-    <!-- Pol -->
-    <a-plane
-        rotation="-90 0 0"
-        width="12"
-        height="12"
-        color="#d5dce7"
-        position="0 0 0">
-    </a-plane>
-
-    <!-- Orqa devor -->
-    <a-plane
-        width="12"
-        height="5"
-        color="#f4f0e9"
-        position="0 2.5 -4">
-    </a-plane>
-
-    <!-- Yoritish -->
-    <a-entity light="type: ambient; intensity: 1"></a-entity>
-
-    <a-entity
-        light="type: directional; intensity: 1"
-        position="2 5 3">
-    </a-entity>
-
-    <!-- Kamera -->
-    <a-camera position="0 2 7" rotation="-10 0 0">
-    </a-camera>
-
+ <a-camera position="0 1.6 0"></a-camera>
 </a-scene>
 
 <script>
-const scene = document.querySelector("a-scene");
-const holat = document.getElementById("holat");
+const sahna = document.querySelector("a-scene");
+const xona = document.querySelector("#xona");
+const video = document.querySelector("#kamera");
+let tanlangan = null;
+let oqim = null;
 
-let tanlanganObyekt = null;
-
-// Holat yozuvini o'zgartirish
-function xabar(matn) {
-    holat.textContent = matn;
+function detal(ota, shakl, joy, olcham, rang) {
+  const e = document.createElement("a-entity");
+  e.setAttribute("geometry", "primitive:" + shakl);
+  e.setAttribute("position", joy);
+  e.setAttribute("scale", olcham);
+  e.setAttribute("material", "color:" + rang);
+  ota.appendChild(e);
+  return e;
 }
 
-// Mebel qismlarini yaratish
-function detal(parent, tur, rang, position, scale) {
-    const qism = document.createElement("a-entity");
+function mebel(tur) {
+  if (tanlangan) tanlangan.remove();
 
-    qism.setAttribute("geometry", "primitive: " + tur);
-    qism.setAttribute("material", "color: " + rang);
-    qism.setAttribute("position", position);
-    qism.setAttribute("scale", scale);
+  const ota = document.createElement("a-entity");
+  ota.setAttribute("position", "0 0 -3");
+  sahna.appendChild(ota);
+  tanlangan = ota;
 
-    parent.appendChild(qism);
-    return qism;
+  if (tur === "divan") {
+    detal(ota,"box","0 0.45 0","1.8 0.5 0.8","#3979bd");
+    detal(ota,"box","0 0.9 -0.3","1.8 0.7 0.2","#28629e");
+    detal(ota,"box","-0.85 0.65 0","0.2 0.6 0.8","#3979bd");
+    detal(ota,"box","0.85 0.65 0","0.2 0.6 0.8","#3979bd");
+  }
+
+  if (tur === "stul") {
+    detal(ota,"box","0 0.6 0","0.8 0.15 0.8","#a66b35");
+    detal(ota,"box","0 1 -0.3","0.8 0.8 0.15","#8b572a");
+    detal(ota,"box","-0.3 0.25 0","0.1 0.6 0.1","#654321");
+    detal(ota,"box","0.3 0.25 0","0.1 0.6 0.1","#654321");
+  }
+
+  if (tur === "stol") {
+    detal(ota,"box","0 0.9 0","1.5 0.12 0.9","#9b6335");
+    detal(ota,"box","-0.6 0.4 -0.3","0.12 0.8 0.12","#654321");
+    detal(ota,"box","0.6 0.4 -0.3","0.12 0.8 0.12","#654321");
+    detal(ota,"box","-0.6 0.4 0.3","0.12 0.8 0.12","#654321");
+    detal(ota,"box","0.6 0.4 0.3","0.12 0.8 0.12","#654321");
+  }
 }
 
-// Divan yaratish
-function divanYarat() {
-    const g = document.createElement("a-entity");
-
-    g.setAttribute("position", "0 0 0");
-
-    detal(g, "box", "#526b91",
-        "0 0.55 0", "1.8 0.35 0.8");
-
-    detal(g, "box", "#405779",
-        "0 0.9 -0.3", "1.8 0.5 0.15");
-
-    detal(g, "box", "#405779",
-        "-0.8 0.65 0", "0.2 0.65 0.8");
-
-    detal(g, "box", "#405779",
-        "0.8 0.65 0", "0.2 0.65 0.8");
-
-    scene.appendChild(g);
-    return g;
-}
-
-// Stul yaratish
-function stulYarat() {
-    const g = document.createElement("a-entity");
-
-    g.setAttribute("position", "0 0 0");
-
-    detal(g, "box", "#b87943",
-        "0 0.8 0", "0.8 0.15 0.8");
-
-    detal(g, "box", "#87552f",
-        "0 1.2 -0.3", "0.8 0.8 0.15");
-
-    detal(g, "cylinder", "#65452e",
-        "-0.3 0.4 -0.3", "0.07 0.8 0.07");
-
-    detal(g, "cylinder", "#65452e",
-        "0.3 0.4 -0.3", "0.07 0.8 0.07");
-
-    detal(g, "cylinder", "#65452e",
-        "-0.3 0.4 0.3", "0.07 0.8 0.07");
-
-    detal(g, "cylinder", "#65452e",
-        "0.3 0.4 0.3", "0.07 0.8 0.07");
-
-    scene.appendChild(g);
-    return g;
-}
-
-// Stol yaratish
-function stolYarat() {
-    const g = document.createElement("a-entity");
-
-    g.setAttribute("position", "0 0 0");
-
-    detal(g, "box", "#a8794d",
-        "0 0.9 0", "1.5 0.15 1");
-
-    detal(g, "cylinder", "#65452e",
-        "-0.6 0.45 -0.35", "0.08 0.9 0.08");
-
-    detal(g, "cylinder", "#65452e",
-        "0.6 0.45 -0.35", "0.08 0.9 0.08");
-
-    detal(g, "cylinder", "#65452e",
-        "-0.6 0.45 0.35", "0.08 0.9 0.08");
-
-    detal(g, "cylinder", "#65452e",
-        "0.6 0.45 0.35", "0.08 0.9 0.08");
-
-    scene.appendChild(g);
-    return g;
-}
-
-// Mebel tanlash
-function modelTanlash(nom) {
-    if (tanlanganObyekt) {
-        tanlanganObyekt.remove();
-    }
-
-    if (nom === "divan") {
-        tanlanganObyekt = divanYarat();
-    }
-
-    if (nom === "stul") {
-        tanlanganObyekt = stulYarat();
-    }
-
-    if (nom === "stol") {
-        tanlanganObyekt = stolYarat();
-    }
-
-    tanlanganObyekt.classList.add("mebel");
-
-    xabar(nom.toUpperCase() + " yaratildi!");
-}
-
-// 3D ko'rinishni boshlash
-document.getElementById("startButton")
-.addEventListener("click", function() {
-    xabar("3D interyer tayyor! Mebel tanlang.");
-});
-
-// Burish
-document.getElementById("rotateButton")
-.addEventListener("click", function() {
-    if (!tanlanganObyekt) {
-        xabar("Avval mebel tanlang!");
-        return;
-    }
-
-    tanlanganObyekt.object3D.rotation.y += Math.PI / 6;
-    xabar("Mebel burildi.");
-});
-
-// Kattalashtirish
-document.getElementById("scaleButton")
-.addEventListener("click", function() {
-    if (!tanlanganObyekt) {
-        xabar("Avval mebel tanlang!");
-        return;
-    }
-
-    tanlanganObyekt.object3D.scale.multiplyScalar(1.15);
-    xabar("Mebel kattalashtirildi.");
-});
-
-// O'chirish
-document.getElementById("deleteButton")
-.addEventListener("click", function() {
-    if (tanlanganObyekt) {
-        tanlanganObyekt.remove();
-        tanlanganObyekt = null;
-        xabar("Mebel o‘chirildi.");
-    }
-});
-
-// Barcha mebellarni o'chirish
-document.getElementById("clearButton")
-.addEventListener("click", function() {
-    scene.querySelectorAll(".mebel").forEach(function(item) {
-        item.remove();
+async function kameraniYoq() {
+  try {
+    oqim = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: "environment" } },
+      audio: false
     });
+    video.srcObject = oqim;
+    video.style.display = "block";
+    xona.setAttribute("visible", "false");
+    document.querySelector("#xabar").textContent =
+      "Kamera yoqildi. Mebel tugmalaridan foydalaning.";
+  } catch (xato) {
+    document.querySelector("#xabar").textContent =
+      "Kamera ochilmadi. Brauzer ruxsatini tekshiring.";
+  }
+}
 
-    tanlanganObyekt = null;
-    xabar("Barcha mebellar o‘chirildi.");
-});
+function uchDRejim() {
+  video.style.display = "none";
+  xona.setAttribute("visible", "true");
+  document.querySelector("#xabar").textContent =
+    "3D xona rejimi yoqildi.";
+}
+
+function burish() {
+  if (tanlangan) {
+    let r = tanlangan.getAttribute("rotation");
+    tanlangan.setAttribute("rotation",
+      {x:r.x, y:r.y + 30, z:r.z});
+  }
+}
+
+function kattalashtir() {
+  if (tanlangan) {
+    let s = tanlangan.getAttribute("scale");
+    tanlangan.setAttribute("scale",
+      {x:s.x*1.2, y:s.y*1.2, z:s.z*1.2});
+  }
+}
+
+function ochirish() {
+  if (tanlangan) {
+    tanlangan.remove();
+    tanlangan = null;
+  }
+}
+
+function tozalash() {
+  sahna.querySelectorAll("a-entity[position='0 0 -3']")
+    .forEach(e => e.remove());
+  tanlangan = null;
+}
 </script>
-
-<footer>
-    AR Interyer Dizayni — 3D loyiha
-</footer>
 
 </body>
 </html>
