@@ -22,14 +22,15 @@
 
         h1 {
             color: darkblue;
-            margin: 15px 5px;
+            padding: 12px;
+            margin: 0;
         }
 
         .panel {
-            position: relative;
-            z-index: 5;
-            padding: 10px;
             background: white;
+            padding: 10px;
+            position: relative;
+            z-index: 10;
         }
 
         button {
@@ -47,18 +48,16 @@
         }
 
         #holat {
-            position: relative;
-            z-index: 5;
-            padding: 8px;
-            color: #183b70;
+            padding: 10px;
+            color: darkblue;
             background: white;
+            position: relative;
+            z-index: 10;
         }
 
         a-scene {
             width: 100%;
             height: 70vh;
-            position: relative;
-            z-index: 1;
         }
 
         #kameraVideo {
@@ -68,7 +67,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            z-index: 0;
+            z-index: -1;
         }
     </style>
 </head>
@@ -79,7 +78,7 @@
 
 <div class="panel">
     <button onclick="kameraniYoqish()">Kamerani yoqish</button>
-    <button onclick="aylantir()">Mebellarni aylantirish</button>
+    <button onclick="aylantir()">Aylantirish</button>
     <button onclick="kattalashtir()">Kattalashtirish</button>
     <button onclick="kichraytir()">Kichraytirish</button>
     <button onclick="qaytaTiklash()">Qayta tiklash</button>
@@ -93,6 +92,9 @@
     embedded
     renderer="alpha: true; colorManagement: true"
     vr-mode-ui="enabled: false">
+
+    <!-- Osmon -->
+    <a-sky color="#c8dced"></a-sky>
 
     <!-- Pol -->
     <a-plane
@@ -110,6 +112,24 @@
         height="4"
         depth="0.15"
         color="#f3eee5">
+    </a-box>
+
+    <!-- Chap devor -->
+    <a-box
+        position="-6 2 -0.5"
+        width="0.15"
+        height="4"
+        depth="9"
+        color="#eee7dc">
+    </a-box>
+
+    <!-- O'ng devor -->
+    <a-box
+        position="6 2 -0.5"
+        width="0.15"
+        height="4"
+        depth="9"
+        color="#eee7dc">
     </a-box>
 
     <!-- Gilam -->
@@ -130,32 +150,84 @@
         color="#8cc9e8">
     </a-box>
 
-    <!-- Divan -->
+    <!-- Deraza ramkasi -->
+    <a-box
+        position="-2.8 2.3 -4.84"
+        width="0.08"
+        height="1.5"
+        depth="0.06"
+        color="#ffffff">
+    </a-box>
+
+    <a-box
+        position="-2.8 2.3 -4.84"
+        width="2.2"
+        height="0.08"
+        depth="0.06"
+        color="#ffffff">
+    </a-box>
+
+    <!-- DIVAN -->
     <a-entity
         id="divan"
         gltf-model="url(./divan.glb)"
-        position="-1.3 0 -3.2"
+        position="-1.7 0 -3.6"
         rotation="0 0 0">
     </a-entity>
 
-    <!-- Stol -->
+    <!-- STOL -->
     <a-entity
         id="stol"
         gltf-model="url(./stol.glb)"
-        position="0 0 -1.7"
+        position="0 0 -1.8"
         rotation="0 0 0">
     </a-entity>
 
-    <!-- Kreslo: stolga qaragan -->
+    <!-- KRESLO -->
     <a-entity
         id="kreslo"
         gltf-model="url(./stul.glb)"
-        position="1.5 0 -2.7"
-        rotation="0 -90 0">
+        position="1.7 0 -2.8"
+        rotation="0 90 0">
     </a-entity>
 
-    <!-- O'simlik -->
-    <a-entity position="-3.5 0 -3.8">
+    <!-- PALMA -->
+    <a-entity position="-4 0 -3.8">
+        <a-cylinder
+            position="0 0.2 0"
+            radius="0.25"
+            height="0.4"
+            color="#a66b42">
+        </a-cylinder>
+
+        <a-cylinder
+            position="0 1 0"
+            radius="0.06"
+            height="1.5"
+            color="#397d42">
+        </a-cylinder>
+
+        <a-sphere
+            position="0 1.7 0"
+            radius="0.45"
+            color="#32834a">
+        </a-sphere>
+
+        <a-sphere
+            position="-0.3 1.5 0"
+            radius="0.3"
+            color="#3b9953">
+        </a-sphere>
+
+        <a-sphere
+            position="0.3 1.5 0"
+            radius="0.3"
+            color="#3b9953">
+        </a-sphere>
+    </a-entity>
+
+    <!-- KAKTUS -->
+    <a-entity position="4 0 -3.8">
         <a-cylinder
             position="0 0.2 0"
             radius="0.25"
@@ -165,49 +237,14 @@
 
         <a-cylinder
             position="0 0.8 0"
-            radius="0.06"
+            radius="0.13"
             height="1.2"
-            color="#397d42">
-        </a-cylinder>
-
-        <a-sphere
-            position="0 1.5 0"
-            radius="0.5"
-            color="#32834a">
-        </a-sphere>
-
-        <a-sphere
-            position="-0.3 1.2 0"
-            radius="0.35"
-            color="#3b9953">
-        </a-sphere>
-
-        <a-sphere
-            position="0.3 1.2 0"
-            radius="0.35"
-            color="#3b9953">
-        </a-sphere>
-    </a-entity>
-
-    <!-- Ikkinchi o'simlik -->
-    <a-entity position="3.5 0 -3.8">
-        <a-cylinder
-            position="0 0.2 0"
-            radius="0.25"
-            height="0.4"
-            color="#a66b42">
-        </a-cylinder>
-
-        <a-cylinder
-            position="0 0.7 0"
-            radius="0.12"
-            height="1"
             color="#278344">
         </a-cylinder>
 
         <a-sphere
-            position="0 1.3 0"
-            radius="0.4"
+            position="0 1.4 0"
+            radius="0.3"
             color="#278344">
         </a-sphere>
     </a-entity>
@@ -227,28 +264,31 @@
 </a-scene>
 
 <script>
+    const mebellar = ["divan", "stol", "kreslo"];
+
     const boshlangich = {
         divan: {
-            position: "-1.3 0 -3.2",
+            position: "-1.7 0 -3.6",
             rotation: "0 0 0",
-            size: 2.4
+            olcham: 2.2
         },
+
         stol: {
-            position: "0 0 -1.7",
+            position: "0 0 -1.8",
             rotation: "0 0 0",
-            size: 1.3
+            olcham: 1.0
         },
+
         kreslo: {
-            position: "1.5 0 -2.7",
-            rotation: "0 -90 0",
-            size: 1.1
+            position: "1.7 0 -2.8",
+            rotation: "0 90 0",
+            olcham: 1.0
         }
     };
 
-    const modellar = ["divan", "stol", "kreslo"];
     let masshtab = 1;
 
-    // GLB modellar o'lchamini avtomatik moslashtirish
+    // Modellarni me'yoriy o'lchamga keltirish
     function modelniMoslash(id) {
         const entity = document.getElementById(id);
         const mesh = entity.getObject3D("mesh");
@@ -259,16 +299,17 @@
 
         const box = new THREE.Box3().setFromObject(mesh);
         const size = new THREE.Vector3();
+
         box.getSize(size);
 
         const engKatta = Math.max(size.x, size.y, size.z);
 
         if (!engKatta || !isFinite(engKatta)) {
-            console.error(id + " modelining o'lchami aniqlanmadi");
+            console.error(id + " o'lchami aniqlanmadi");
             return;
         }
 
-        const kerakli = boshlangich[id].size;
+        const kerakli = boshlangich[id].olcham;
         const koeffitsiyent = kerakli / engKatta;
 
         mesh.scale.multiplyScalar(koeffitsiyent);
@@ -276,12 +317,27 @@
 
         const yangiBox = new THREE.Box3().setFromObject(mesh);
         const markaz = new THREE.Vector3();
+
         yangiBox.getCenter(markaz);
 
-        // Modelni markazga keltirish va polga tushirish
-        mesh.position.x -= markaz.x;
-        mesh.position.y -= yangiBox.min.y;
-        mesh.position.z -= markaz.z;
+        // Modelni o'z markaziga joylashtirish
+        const mahalliyMarkaz = entity.object3D.worldToLocal(markaz.clone());
+
+        mesh.position.x -= mahalliyMarkaz.x;
+        mesh.position.z -= mahalliyMarkaz.z;
+
+        // Modelning pastki qismini polga tushirish
+        const pastkiNuqta = new THREE.Vector3(
+            markaz.x,
+            yangiBox.min.y,
+            markaz.z
+        );
+
+        const mahalliyPast = entity.object3D.worldToLocal(
+            pastkiNuqta.clone()
+        );
+
+        mesh.position.y -= mahalliyPast.y;
 
         mesh.updateMatrixWorld(true);
 
@@ -289,17 +345,22 @@
         holatniYangilash();
     }
 
+    // Yuklanish holatini ko'rsatish
     function holatniYangilash() {
-        const tayyor = modellar.filter(function(id) {
-            return document.getElementById(id).dataset.yuklandi === "ha";
-        }).length;
+        let son = 0;
+
+        mebellar.forEach(function(id) {
+            if (document.getElementById(id).dataset.yuklandi === "ha") {
+                son++;
+            }
+        });
 
         document.getElementById("holat").textContent =
-            "Yuklangan modellar: " + tayyor + " / 3";
+            "Yuklangan modellar: " + son + " / 3";
     }
 
-    // Modellar yuklanishini tekshirish
-    modellar.forEach(function(id) {
+    // GLB modellarni yuklashni kuzatish
+    mebellar.forEach(function(id) {
         const entity = document.getElementById(id);
 
         entity.addEventListener("model-loaded", function() {
@@ -307,15 +368,16 @@
         });
 
         entity.addEventListener("model-error", function(event) {
-            console.error(id + " yuklanmadi:", event.detail);
+            console.error(id + " modeli yuklanmadi:", event.detail);
+
             document.getElementById("holat").textContent =
-                id + " modeli yuklanmadi. Fayl manzilini tekshiring.";
+                id + " modeli yuklanmadi!";
         });
     });
 
-    // Mebellarni aylantirish
+    // Aylantirish
     function aylantir() {
-        modellar.forEach(function(id) {
+        mebellar.forEach(function(id) {
             const entity = document.getElementById(id);
             const r = entity.getAttribute("rotation");
 
@@ -329,65 +391,70 @@
 
     // Kattalashtirish
     function kattalashtir() {
-        masshtab += 0.1;
-        masshtabniOzgartirish();
+        masshtab = Math.min(1.5, masshtab + 0.1);
+        masshtabniYangilash();
     }
 
     // Kichraytirish
     function kichraytir() {
-        masshtab = Math.max(0.3, masshtab - 0.1);
-        masshtabniOzgartirish();
+        masshtab = Math.max(0.6, masshtab - 0.1);
+        masshtabniYangilash();
     }
 
-    function masshtabniOzgartirish() {
-        modellar.forEach(function(id) {
+    function masshtabniYangilash() {
+        mebellar.forEach(function(id) {
             const entity = document.getElementById(id);
-            const s = boshlangich[id].size === 2.4 ? 1 : 1;
 
-            entity.object3D.scale.setScalar(masshtab);
+            entity.object3D.scale.set(
+                masshtab,
+                masshtab,
+                masshtab
+            );
         });
     }
 
-    // Dastlabki holatga qaytarish
+    // Qayta tiklash
     function qaytaTiklash() {
         masshtab = 1;
 
-        modellar.forEach(function(id) {
+        mebellar.forEach(function(id) {
             const entity = document.getElementById(id);
             const data = boshlangich[id];
 
             entity.setAttribute("position", data.position);
             entity.setAttribute("rotation", data.rotation);
+
             entity.object3D.scale.set(1, 1, 1);
         });
     }
 
     // Telefon kamerasini yoqish
-    let kameraOqimi = null;
-
     function kameraniYoqish() {
         if (!navigator.mediaDevices ||
             !navigator.mediaDevices.getUserMedia) {
-            alert("Kamera uchun HTTPS orqali oching.");
+            alert("Kamerani ishlatish uchun HTTPS orqali oching.");
             return;
         }
 
         navigator.mediaDevices.getUserMedia({
-            video: { facingMode: "environment" },
+            video: {
+                facingMode: "environment"
+            },
             audio: false
         })
         .then(function(oqim) {
-            kameraOqimi = oqim;
-
             const video = document.getElementById("kameraVideo");
+
             video.srcObject = oqim;
             video.style.display = "block";
 
+            video.play();
+
             document.getElementById("holat").textContent =
-                "Kamera yoqildi.";
+                "Kamera yoqildi!";
         })
         .catch(function(xato) {
-            alert("Kameraga ruxsat berilmadi: " + xato.message);
+            alert("Kamera ochilmadi: " + xato.message);
         });
     }
 </script>
