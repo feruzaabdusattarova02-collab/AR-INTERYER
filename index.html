@@ -5,13 +5,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AR Interyer Dizayni</title>
-
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
 <style>
-* {
-    box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
     margin: 0;
@@ -24,7 +21,6 @@ h1 {
     color: #183b70;
     padding: 12px;
     margin: 0;
-    background: transparent;
     text-shadow: 1px 1px 3px white;
 }
 
@@ -45,9 +41,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
-    background: #153d73;
-}
+button:hover { background: #153d73; }
 
 b {
     color: #183b70;
@@ -63,9 +57,7 @@ a-scene {
     background: transparent;
 }
 
-video {
-    pointer-events: none;
-}
+video { pointer-events: none; }
 </style>
 </head>
 
@@ -82,14 +74,20 @@ video {
     <button onclick="qaytaTiklash()">Qayta tiklash</button>
 </div>
 
+<div class="panel">
+    <b>Mebel va gullar qo‘shish:</b><br>
+    <button onclick="divanQoshish()">🛋 Divan qo‘shish</button>
+    <button onclick="stolQoshish()">🪑 Stol qo‘shish</button>
+    <button onclick="kresloQoshish()">🪑 Kreslo qo‘shish</button>
+    <button onclick="gullarQoshish()">🌸 Gullar qo‘shish</button>
+</div>
+
 <div class="ranglar">
     <b>Pol ranglari:</b>
     <button onclick="polRangi('#d8c5a8')">Jigarrang</button>
     <button onclick="polRangi('#b8c9d9')">Kulrang</button>
     <button onclick="polRangi('#d5b5a8')">Pushti</button>
-
     <br>
-
     <b>Devor ranglari:</b>
     <button onclick="devorRangi('#f3eee5')">Oq</button>
     <button onclick="devorRangi('#d8e6f5')">Moviy</button>
@@ -104,20 +102,16 @@ video {
     <a-sky id="osmon" color="#c8dced"></a-sky>
 
     <!-- POL -->
-    <a-plane id="pol"
-        rotation="-90 0 0"
-        width="14" height="14"
-        color="#d8c5a8">
+    <a-plane id="pol" rotation="-90 0 0"
+        width="14" height="14" color="#d8c5a8">
     </a-plane>
 
-    <!-- ORQA DEVOR -->
-    <a-box id="devor"
-        position="0 2 -5"
+    <!-- DEVORLAR -->
+    <a-box id="devor" position="0 2 -5"
         width="12" height="4" depth="0.15"
         color="#f3eee5">
     </a-box>
 
-    <!-- CHAP DEVOR -->
     <a-box position="-6 2 -2"
         width="0.15" height="4" depth="6"
         color="#e8dfd2">
@@ -125,14 +119,12 @@ video {
 
     <!-- GILAM -->
     <a-plane position="0 0.025 -2.7"
-        rotation="-90 0 0"
-        width="5" height="3.5"
+        rotation="-90 0 0" width="5" height="3.5"
         color="#a98291">
     </a-plane>
 
     <a-plane position="0 0.04 -2.7"
-        rotation="-90 0 0"
-        width="4.6" height="3.1"
+        rotation="-90 0 0" width="4.6" height="3.1"
         color="#c9a9b4">
     </a-plane>
 
@@ -175,7 +167,8 @@ video {
         gltf-model="url(./divan.glb)"
         position="-1.65 0 -3.3"
         rotation="0 0 0"
-        scale="0.75 0.75 0.75">
+        scale="0.75 0.75 0.75"
+        visible="false">
     </a-entity>
 
     <!-- STOL -->
@@ -183,7 +176,8 @@ video {
         gltf-model="url(./stol.glb)"
         position="0 0 -1.55"
         rotation="0 0 0"
-        scale="0.55 0.55 0.55">
+        scale="0.55 0.55 0.55"
+        visible="false">
     </a-entity>
 
     <!-- KRESLO -->
@@ -191,105 +185,129 @@ video {
         gltf-model="url(./stul.glb)"
         position="1.7 0 -2.8"
         rotation="0 -35 0"
-        scale="0.60 0.60 0.60">
+        scale="0.60 0.60 0.60"
+        visible="false">
     </a-entity>
 
     <!-- PALMA -->
     <a-entity position="-3.7 0 -3.7">
         <a-cylinder position="0 0.25 0"
-            radius="0.3" height="0.5"
-            color="#a66b42"></a-cylinder>
+            radius="0.3" height="0.5" color="#a66b42">
+        </a-cylinder>
         <a-cylinder position="0 1.1 0"
-            radius="0.07" height="1.7"
-            color="#79502c"></a-cylinder>
+            radius="0.07" height="1.7" color="#79502c">
+        </a-cylinder>
         <a-sphere position="0 2 0"
-            radius="0.48" color="#278344"></a-sphere>
+            radius="0.48" color="#278344">
+        </a-sphere>
         <a-sphere position="-0.35 1.8 0"
-            radius="0.35" color="#359b50"></a-sphere>
+            radius="0.35" color="#359b50">
+        </a-sphere>
         <a-sphere position="0.35 1.8 0"
-            radius="0.35" color="#359b50"></a-sphere>
+            radius="0.35" color="#359b50">
+        </a-sphere>
         <a-sphere position="0 2.25 0.25"
-            radius="0.3" color="#42a65a"></a-sphere>
+            radius="0.3" color="#42a65a">
+        </a-sphere>
     </a-entity>
 
     <!-- KAKTUS -->
     <a-entity position="3.6 0 -3.6">
         <a-cylinder position="0 0.2 0"
-            radius="0.3" height="0.4"
-            color="#b8794e"></a-cylinder>
+            radius="0.3" height="0.4" color="#b8794e">
+        </a-cylinder>
         <a-cylinder position="0 0.9 0"
-            radius="0.2" height="1.2"
-            color="#278344"></a-cylinder>
+            radius="0.2" height="1.2" color="#278344">
+        </a-cylinder>
         <a-cylinder position="-0.22 0.85 0"
-            radius="0.1" height="0.55"
-            color="#278344"></a-cylinder>
+            radius="0.1" height="0.55" color="#278344">
+        </a-cylinder>
         <a-cylinder position="0.22 0.95 0"
-            radius="0.1" height="0.5"
-            color="#278344"></a-cylinder>
+            radius="0.1" height="0.5" color="#278344">
+        </a-cylinder>
     </a-entity>
 
-    <!-- PUSHTI GUL -->
-    <a-entity position="-3.2 0 -1.5">
-        <a-cylinder position="0 0.18 0"
-            radius="0.23" height="0.36"
-            color="#c47b50"></a-cylinder>
-        <a-cylinder position="0 0.65 0"
-            radius="0.035" height="0.65"
-            color="#348b45"></a-cylinder>
-        <a-sphere position="0 1 0"
-            radius="0.13" color="#e94b88"></a-sphere>
-        <a-sphere position="0.15 0.9 0"
-            radius="0.12" color="#f4a1bd"></a-sphere>
-        <a-sphere position="-0.15 0.9 0"
-            radius="0.12" color="#f4a1bd"></a-sphere>
-        <a-sphere position="0 0.85 0.15"
-            radius="0.12" color="#f4a1bd"></a-sphere>
-        <a-sphere position="0 0.85 -0.15"
-            radius="0.12" color="#f4a1bd"></a-sphere>
-        <a-sphere position="0 0.9 0"
-            radius="0.07" color="#f5d34f"></a-sphere>
-    </a-entity>
+    <!-- GULLAR GURUHI -->
+    <a-entity id="gullar" visible="false">
 
-    <!-- SARIQ GUL -->
-    <a-entity position="3.1 0 -1.4">
-        <a-cylinder position="0 0.18 0"
-            radius="0.23" height="0.36"
-            color="#a66b42"></a-cylinder>
-        <a-cylinder position="0 0.65 0"
-            radius="0.035" height="0.65"
-            color="#348b45"></a-cylinder>
-        <a-sphere position="0 1 0"
-            radius="0.14" color="#ffcf45"></a-sphere>
-        <a-sphere position="0.15 0.9 0"
-            radius="0.12" color="#ffdf70"></a-sphere>
-        <a-sphere position="-0.15 0.9 0"
-            radius="0.12" color="#ffdf70"></a-sphere>
-        <a-sphere position="0 0.85 0.15"
-            radius="0.12" color="#ffdf70"></a-sphere>
-        <a-sphere position="0 0.85 -0.15"
-            radius="0.12" color="#ffdf70"></a-sphere>
+        <!-- PUSHTI GUL -->
+        <a-entity position="-3.2 0 -1.5">
+            <a-cylinder position="0 0.18 0"
+                radius="0.23" height="0.36" color="#c47b50">
+            </a-cylinder>
+            <a-cylinder position="0 0.65 0"
+                radius="0.035" height="0.65" color="#348b45">
+            </a-cylinder>
+            <a-sphere position="0 1 0"
+                radius="0.13" color="#e94b88">
+            </a-sphere>
+            <a-sphere position="0.15 0.9 0"
+                radius="0.12" color="#f4a1bd">
+            </a-sphere>
+            <a-sphere position="-0.15 0.9 0"
+                radius="0.12" color="#f4a1bd">
+            </a-sphere>
+            <a-sphere position="0 0.85 0.15"
+                radius="0.12" color="#f4a1bd">
+            </a-sphere>
+            <a-sphere position="0 0.85 -0.15"
+                radius="0.12" color="#f4a1bd">
+            </a-sphere>
+            <a-sphere position="0 0.9 0"
+                radius="0.07" color="#f5d34f">
+            </a-sphere>
+        </a-entity>
+
+        <!-- SARIQ GUL -->
+        <a-entity position="3.1 0 -1.4">
+            <a-cylinder position="0 0.18 0"
+                radius="0.23" height="0.36" color="#a66b42">
+            </a-cylinder>
+            <a-cylinder position="0 0.65 0"
+                radius="0.035" height="0.65" color="#348b45">
+            </a-cylinder>
+            <a-sphere position="0 1 0"
+                radius="0.14" color="#ffcf45">
+            </a-sphere>
+            <a-sphere position="0.15 0.9 0"
+                radius="0.12" color="#ffdf70">
+            </a-sphere>
+            <a-sphere position="-0.15 0.9 0"
+                radius="0.12" color="#ffdf70">
+            </a-sphere>
+            <a-sphere position="0 0.85 0.15"
+                radius="0.12" color="#ffdf70">
+            </a-sphere>
+            <a-sphere position="0 0.85 -0.15"
+                radius="0.12" color="#ffdf70">
+            </a-sphere>
+        </a-entity>
+
     </a-entity>
 
     <!-- YASHIL O'SIMLIK -->
     <a-entity position="2.7 0 -4.2">
         <a-cylinder position="0 0.2 0"
-            radius="0.22" height="0.4"
-            color="#bd8258"></a-cylinder>
+            radius="0.22" height="0.4" color="#bd8258">
+        </a-cylinder>
         <a-sphere position="0 0.7 0"
-            radius="0.38" color="#32934b"></a-sphere>
+            radius="0.38" color="#32934b">
+        </a-sphere>
         <a-sphere position="-0.2 0.8 0"
-            radius="0.25" color="#45a85b"></a-sphere>
+            radius="0.25" color="#45a85b">
+        </a-sphere>
         <a-sphere position="0.2 0.8 0"
-            radius="0.25" color="#45a85b"></a-sphere>
+            radius="0.25" color="#45a85b">
+        </a-sphere>
     </a-entity>
 
     <!-- YORUG'LIK -->
     <a-light type="ambient" intensity="0.8"></a-light>
     <a-light type="directional"
-        position="-2 5 3" intensity="0.8"></a-light>
+        position="-2 5 3" intensity="0.8">
+    </a-light>
 
     <a-camera position="0 1.6 0"></a-camera>
-
 </a-scene>
 
 <script>
@@ -314,6 +332,24 @@ const boshlangich = {
     }
 };
 
+// MEBEL QO'SHISH
+function divanQoshish() {
+    document.getElementById("divan").setAttribute("visible", true);
+}
+
+function stolQoshish() {
+    document.getElementById("stol").setAttribute("visible", true);
+}
+
+function kresloQoshish() {
+    document.getElementById("kreslo").setAttribute("visible", true);
+}
+
+function gullarQoshish() {
+    document.getElementById("gullar").setAttribute("visible", true);
+}
+
+// KAMERA
 function kameraniYoqish() {
     if (!navigator.mediaDevices ||
         !navigator.mediaDevices.getUserMedia) {
@@ -370,20 +406,26 @@ function kameraniOchirish() {
         .setAttribute("visible", true);
 }
 
+// MEBELNI AYLANTIRISH
 function aylantir() {
     ["divan", "stol", "kreslo"].forEach(function(id) {
         const el = document.getElementById(id);
         const r = el.getAttribute("rotation");
+
         el.setAttribute("rotation", {
-            x: r.x, y: r.y + 15, z: r.z
+            x: r.x,
+            y: r.y + 15,
+            z: r.z
         });
     });
 }
 
+// MEBELNI KATTALASHTIRISH
 function kattalashtir() {
     ["divan", "stol", "kreslo"].forEach(function(id) {
         const el = document.getElementById(id);
         const s = el.getAttribute("scale");
+
         el.setAttribute("scale", {
             x: s.x + 0.05,
             y: s.y + 0.05,
@@ -392,10 +434,12 @@ function kattalashtir() {
     });
 }
 
+// MEBELNI KICHRAYTIRISH
 function kichraytir() {
     ["divan", "stol", "kreslo"].forEach(function(id) {
         const el = document.getElementById(id);
         const s = el.getAttribute("scale");
+
         el.setAttribute("scale", {
             x: Math.max(0.2, s.x - 0.05),
             y: Math.max(0.2, s.y - 0.05),
@@ -404,6 +448,7 @@ function kichraytir() {
     });
 }
 
+// RANGLARNI ALMASHTIRISH
 function polRangi(rang) {
     document.getElementById("pol").setAttribute("color", rang);
 }
@@ -412,13 +457,20 @@ function devorRangi(rang) {
     document.getElementById("devor").setAttribute("color", rang);
 }
 
+// QAYTA TIKLASH
 function qaytaTiklash() {
     Object.keys(boshlangich).forEach(function(id) {
         const el = document.getElementById(id);
+
         el.setAttribute("position", boshlangich[id].position);
         el.setAttribute("rotation", boshlangich[id].rotation);
         el.setAttribute("scale", boshlangich[id].scale);
     });
+
+    document.getElementById("divan").setAttribute("visible", false);
+    document.getElementById("stol").setAttribute("visible", false);
+    document.getElementById("kreslo").setAttribute("visible", false);
+    document.getElementById("gullar").setAttribute("visible", false);
 
     polRangi("#d8c5a8");
     devorRangi("#f3eee5");
