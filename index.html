@@ -3,218 +3,457 @@
 <html lang="uz">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AR Interyer Dizayni</title>
 <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial;background:#17212b}
-#kamera{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:0}
-a-scene{position:fixed!important;inset:0;width:100%;height:100%;z-index:1}
-#panel{position:fixed;top:10px;left:10px;right:10px;z-index:5;
-background:rgba(20,29,43,.88);padding:14px;border-radius:18px;
-text-align:center;box-shadow:0 5px 20px #0005}
-h2{color:white;margin:3px 0 10px;font-size:20px;letter-spacing:1px}
-p{color:#dce8f5;font-size:12px;margin:7px}
-button{border:0;border-radius:10px;padding:11px 13px;margin:4px;
-background:#d3a66b;color:#18212b;font-weight:bold;font-size:13px}
-button:active{transform:scale(.96)}
-.mode{background:#397bba;color:white}
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #202c38;
+}
+
+#kamera {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  z-index: 0;
+}
+
+a-scene {
+  position: fixed !important;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+#panel {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 5;
+  padding: 14px;
+  text-align: center;
+  background: rgba(24, 35, 49, .92);
+  border-radius: 18px;
+  box-shadow: 0 5px 20px #0005;
+}
+
+h2 {
+  color: white;
+  margin: 4px 0 12px;
+}
+
+button {
+  padding: 11px 13px;
+  margin: 4px;
+  border: none;
+  border-radius: 10px;
+  background: #d5a66d;
+  color: #202c38;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.mode {
+  background: #397db9;
+  color: white;
+}
+
+#xabar {
+  color: white;
+  font-size: 12px;
+}
 </style>
 </head>
+
 <body>
 
 <video id="kamera" autoplay playsinline muted></video>
 
 <div id="panel">
-<h2>AR INTERYER DIZAYNI</h2>
-<button class="mode" onclick="kameraniYoq()">📷 Kamera</button>
-<button class="mode" onclick="uchDRejim()">🏠 3D xona</button>
-<br>
-<button onclick="mebel('divan')">🛋 Divan</button>
-<button onclick="mebel('stul')">🪑 Kreslo</button>
-<button onclick="mebel('stol')">🪵 Stol</button>
-<button onclick="mebel('gul')">🪴 Gul</button>
-<br>
-<button onclick="burish()">↻ Burish</button>
-<button onclick="kattalashtir()">＋ Kattalashtirish</button>
-<button onclick="kichraytir()">－ Kichraytirish</button>
-<button onclick="ochirish()">✖ O‘chirish</button>
-<button onclick="tozalash()">Tozalash</button>
-<p id="xabar">Interyeringizni o‘zingiz yarating!</p>
+  <h2>AR INTERYER DIZAYNI</h2>
+
+  <button class="mode" onclick="kameraniYoq()">📷 Kamera</button>
+  <button class="mode" onclick="uchDRejim()">🏠 3D xona</button>
+
+  <br>
+
+  <button onclick="mebel('divan')">🛋 Divan</button>
+  <button onclick="mebel('stul')">🪑 Kreslo</button>
+  <button onclick="mebel('stol')">🪵 Stol</button>
+  <button onclick="mebel('gul')">🌿 Gul</button>
+
+  <br>
+
+  <button onclick="burish()">↻ Burish</button>
+  <button onclick="kattalashtir()">＋ Kattalashtirish</button>
+  <button onclick="kichraytir()">－ Kichraytirish</button>
+  <button onclick="ochirish()">✖ O‘chirish</button>
+  <button onclick="tozalash()">Tozalash</button>
+
+  <p id="xabar">Interyeringizni yarating!</p>
 </div>
 
-<a-scene embedded renderer="alpha:true; colorManagement:true"
- vr-mode-ui="enabled:false">
- <a-entity id="xona">
-   <a-sky color="#b8d2e8"></a-sky>
+<a-scene embedded
+  renderer="alpha:true; colorManagement:true"
+  vr-mode-ui="enabled:false">
 
-   <!-- Pol va gilam -->
-   <a-plane rotation="-90 0 0" width="14" height="14" color="#b99572"></a-plane>
-   <a-plane position="0 .015 -3" rotation="-90 0 0"
-      width="5" height="3.5" color="#e5d3bd"></a-plane>
-   <a-plane position="0 .025 -3" rotation="-90 0 0"
-      width="4.6" height="3.1" color="#9b7760"></a-plane>
+  <a-entity id="xona">
 
-   <!-- Orqa devor -->
-   <a-box position="0 2 -5" width="12" height="4" depth=".15"
-      color="#eee6dc"></a-box>
+    <!-- Xona foni -->
+    <a-sky color="#b8d2e8"></a-sky>
 
-   <!-- Deraza -->
-   <a-box position="-2.6 2.3 -4.88" width="2.1" height="1.7"
-      depth=".05" color="#8ac3dc"></a-box>
-   <a-box position="-2.6 2.3 -4.82" width=".08" height="1.8"
-      depth=".08" color="#fff"></a-box>
-   <a-box position="-2.6 2.3 -4.82" width="2.2" height=".08"
-      depth=".08" color="#fff"></a-box>
-   <a-box position="-2.6 2.3 -4.78" width=".06" height="1.7"
-      depth=".08" color="#fff"></a-box>
+    <!-- Pol -->
+    <a-plane
+      rotation="-90 0 0"
+      width="14"
+      height="14"
+      color="#b99572">
+    </a-plane>
 
-   <!-- Devor bezagi -->
-   <a-box position="2.6 2.4 -4.88" width="1.4" height="1.5"
-      depth=".08" color="#b68b62"></a-box>
-   <a-box position="2.6 2.4 -4.8" width="1.2" height="1.3"
-      depth=".04" color="#d9c3a8"></a-box>
+    <!-- Gilam -->
+    <a-plane
+      position="0 0.02 -3"
+      rotation="-90 0 0"
+      width="5"
+      height="3.5"
+      color="#9b7760">
+    </a-plane>
 
-   <!-- Chiroqlar -->
-   <a-entity light="type:ambient;intensity:1.1"></a-entity>
-   <a-entity light="type:directional;intensity:1.2"
-      position="-2 5 3"></a-entity>
- </a-entity>
+    <!-- Orqa devor -->
+    <a-box
+      position="0 2 -5"
+      width="12"
+      height="4"
+      depth="0.15"
+      color="#eee6dc">
+    </a-box>
 
- <a-camera position="0 1.6 0"></a-camera>
+    <!-- Deraza -->
+    <a-box
+      position="-2.6 2.3 -4.88"
+      width="2.1"
+      height="1.7"
+      depth="0.05"
+      color="#8ac3dc">
+    </a-box>
+
+    <a-box
+      position="-2.6 2.3 -4.8"
+      width="0.06"
+      height="1.7"
+      depth="0.08"
+      color="white">
+    </a-box>
+
+    <!-- Devor bezagi -->
+    <a-box
+      position="2.6 2.4 -4.88"
+      width="1.4"
+      height="1.5"
+      depth="0.08"
+      color="#b68b62">
+    </a-box>
+
+    <!-- Yorug‘lik -->
+    <a-entity light="type:ambient; intensity:1.1"></a-entity>
+    <a-entity
+      light="type:directional; intensity:1.2"
+      position="-2 5 3">
+    </a-entity>
+
+  </a-entity>
+
+  <a-camera position="0 1.6 0"></a-camera>
+
 </a-scene>
 
 <script>
-const sahna=document.querySelector("a-scene");
-const xona=document.querySelector("#xona");
-const video=document.querySelector("#kamera");
-let tanlangan=null;
-let oqim=null;
+const sahna = document.querySelector("a-scene");
+const xona = document.querySelector("#xona");
+const video = document.querySelector("#kamera");
 
-function quti(ota,joy,olcham,rang){
- let e=document.createElement("a-box");
- e.setAttribute("position",joy);
- e.setAttribute("width",olcham[0]);
- e.setAttribute("height",olcham[1]);
- e.setAttribute("depth",olcham[2]);
- e.setAttribute("material","color:"+rang+";roughness:0.8");
- ota.appendChild(e);
- return e;
-}
-function shar(ota,joy,olcham,rang){
- let e=document.createElement("a-sphere");
- e.setAttribute("position",joy);
- e.setAttribute("radius",olcham);
- e.setAttribute("material","color:"+rang);
- ota.appendChild(e);
- return e;
-}
-function silindr(ota,joy,radius,height,rang){
- let e=document.createElement("a-cylinder");
- e.setAttribute("position",joy);
- e.setAttribute("radius",radius);
- e.setAttribute("height",height);
- e.setAttribute("material","color:"+rang);
- ota.appendChild(e);
- return e;
+let tanlangan = null;
+let oqim = null;
+
+// Mebel qismlarini yaratish
+function quti(ota, joy, olcham, rang) {
+  let e = document.createElement("a-box");
+
+  e.setAttribute("position", joy);
+  e.setAttribute("width", olcham[0]);
+  e.setAttribute("height", olcham[1]);
+  e.setAttribute("depth", olcham[2]);
+  e.setAttribute("material", "color:" + rang + "; roughness:0.8");
+
+  ota.appendChild(e);
+  return e;
 }
 
-function mebel(tur){
- let ota=document.createElement("a-entity");
- ota.setAttribute("position","0 0 -3");
- sahna.appendChild(ota);
- tanlangan=ota;
+function shar(ota, joy, radius, rang) {
+  let e = document.createElement("a-sphere");
 
- if(tur==="divan"){
-   quti(ota,"0 .55 0",[1.9,.5,.85],"#426f91");
-   quti(ota,"0 1 -.34",[1.9,.85,.2],"#315875");
-   quti(ota,"-.88 .78 0",[.22,.55,.85],"#315875");
-   quti(ota,".88 .78 0",[.22,.55,.85],"#315875");
-   quti(ota,"-.48 .84 -.12",[.62,.2,.55],"#e9d5bd");
-   quti(ota,".48 .84 -.12",[.62,.2,.55],"#e9d5bd");
-   for(let x of [-.7,.7]){
-    quti(ota,x+" .18 .28",[.12,.36,.12],"#493b34");
-   }
- }
- if(tur==="stul"){
-   quti(ota,"0 .65 0",[.9,.18,.8],"#bd8c5a");
-   quti(ota,"0 1 -.32",[.9,.85,.14],"#8e5938");
-   quti(ota,"-.36 .3 .28",[.12,.6,.12],"#62432f");
-   quti(ota,".36 .3 .28",[.12,.6,.12],"#62432f");
-   quti(ota,"-.36 .3 -.28",[.12,.6,.12],"#62432f");
-   quti(ota,".36 .3 -.28",[.12,.6,.12],"#62432f");
-   quti(ota,"0 .78 .02",[.65,.13,.6],"#e7c7a5");
- }
- if(tur==="stol"){
-   quti(ota,"0 .95 0",[1.6,.16,1],"#85502d");
-   quti(ota,"-.65 .48 -.35",[.13,.9,.13],"#543923");
-   quti(ota,".65 .48 -.35",[.13,.9,.13],"#543923");
-   quti(ota,"-.65 .48 .35",[.13,.9,.13],"#543923");
-   quti(ota,".65 .48 .35",[.13,.9,.13],"#543923");
-   quti(ota,"0 1.06 0",[.55,.08,.3],"#d6b27b");
- }
- if(tur==="gul"){
-   silindr(ota,"0 .25 0",.3,.5,"#b65e43");
-   silindr(ota,"0 .52 0",.22,.08,"#71412e");
-   for(let i=0;i<7;i++){
-     let a=i*Math.PI*2/7;
-     let x=Math.cos(a)*.25;
-     let z=Math.sin(a)*.25;
-     silindr(ota,x+" .95 "+z,.045,.8,"#39804a");
-     shar(ota,x+" 1.35 "+z,.17,"#4d9b55");
-   }
- }
- document.querySelector("#xabar").textContent="Mebel qo‘shildi. Uni boshqarishingiz mumkin.";
+  e.setAttribute("position", joy);
+  e.setAttribute("radius", radius);
+  e.setAttribute("material", "color:" + rang);
+
+  ota.appendChild(e);
+  return e;
 }
 
-async function kameraniYoq(){
- try{
-  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
-    throw new Error("Kamera qo‘llab-quvvatlanmaydi");
-  oqim=await navigator.mediaDevices.getUserMedia({
-   video:{facingMode:{ideal:"environment"}},audio:false
+function silindr(ota, joy, radius, balandlik, rang) {
+  let e = document.createElement("a-cylinder");
+
+  e.setAttribute("position", joy);
+  e.setAttribute("radius", radius);
+  e.setAttribute("height", balandlik);
+  e.setAttribute("material", "color:" + rang);
+
+  ota.appendChild(e);
+  return e;
+}
+
+// Mebel yaratish
+function mebel(tur) {
+
+  let ota = document.createElement("a-entity");
+  ota.classList.add("mebel");
+
+  // Har bir mebelning alohida joyi
+  const joylar = {
+    divan: "-1.5 0 -3",
+    stul: "1.3 0 -3",
+    stol: "0 0 -4.5",
+    gul: "2 0 -4"
+  };
+
+  ota.setAttribute("position", joylar[tur]);
+
+  sahna.appendChild(ota);
+  tanlangan = ota;
+
+  // DIVAN
+  if (tur === "divan") {
+
+    quti(ota, "0 0.55 0",
+      [1.9, 0.5, 0.85], "#426f91");
+
+    quti(ota, "0 1 -0.34",
+      [1.9, 0.85, 0.2], "#315875");
+
+    quti(ota, "-0.88 0.78 0",
+      [0.22, 0.55, 0.85], "#315875");
+
+    quti(ota, "0.88 0.78 0",
+      [0.22, 0.55, 0.85], "#315875");
+
+    quti(ota, "-0.48 0.84 -0.12",
+      [0.62, 0.2, 0.55], "#e9d5bd");
+
+    quti(ota, "0.48 0.84 -0.12",
+      [0.62, 0.2, 0.55], "#e9d5bd");
+
+    quti(ota, "-0.7 0.18 0.28",
+      [0.12, 0.36, 0.12], "#493b34");
+
+    quti(ota, "0.7 0.18 0.28",
+      [0.12, 0.36, 0.12], "#493b34");
+  }
+
+  // KRESLO
+  if (tur === "stul") {
+
+    quti(ota, "0 0.65 0",
+      [0.9, 0.18, 0.8], "#bd8c5a");
+
+    quti(ota, "0 1 -0.32",
+      [0.9, 0.85, 0.14], "#8e5938");
+
+    quti(ota, "-0.36 0.3 0.28",
+      [0.12, 0.6, 0.12], "#62432f");
+
+    quti(ota, "0.36 0.3 0.28",
+      [0.12, 0.6, 0.12], "#62432f");
+
+    quti(ota, "-0.36 0.3 -0.28",
+      [0.12, 0.6, 0.12], "#62432f");
+
+    quti(ota, "0.36 0.3 -0.28",
+      [0.12, 0.6, 0.12], "#62432f");
+
+    quti(ota, "0 0.78 0.02",
+      [0.65, 0.13, 0.6], "#e7c7a5");
+  }
+
+  // STOL
+  if (tur === "stol") {
+
+    quti(ota, "0 0.95 0",
+      [1.6, 0.16, 1], "#85502d");
+
+    quti(ota, "-0.65 0.48 -0.35",
+      [0.13, 0.9, 0.13], "#543923");
+
+    quti(ota, "0.65 0.48 -0.35",
+      [0.13, 0.9, 0.13], "#543923");
+
+    quti(ota, "-0.65 0.48 0.35",
+      [0.13, 0.9, 0.13], "#543923");
+
+    quti(ota, "0.65 0.48 0.35",
+      [0.13, 0.9, 0.13], "#543923");
+
+    quti(ota, "0 1.06 0",
+      [0.55, 0.08, 0.3], "#d6b27b");
+  }
+
+  // GUL
+  if (tur === "gul") {
+
+    silindr(ota, "0 0.25 0",
+      0.3, 0.5, "#b65e43");
+
+    silindr(ota, "0 0.52 0",
+      0.22, 0.08, "#71412e");
+
+    for (let i = 0; i < 7; i++) {
+
+      let a = i * Math.PI * 2 / 7;
+      let x = Math.cos(a) * 0.25;
+      let z = Math.sin(a) * 0.25;
+
+      silindr(ota, x + " 0.95 " + z,
+        0.045, 0.8, "#39804a");
+
+      shar(ota, x + " 1.35 " + z,
+        0.17, "#4d9b55");
+    }
+  }
+
+  document.querySelector("#xabar").textContent =
+    "Mebel joylashtirildi!";
+}
+
+// Kamerani yoqish
+async function kameraniYoq() {
+
+  try {
+
+    if (!navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia) {
+      throw new Error("Kamera mavjud emas");
+    }
+
+    oqim = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: "environment" } },
+      audio: false
+    });
+
+    video.srcObject = oqim;
+    video.style.display = "block";
+
+    xona.setAttribute("visible", "false");
+
+    document.querySelector("#xabar").textContent =
+      "Kamera rejimi yoqildi!";
+
+  } catch (xato) {
+
+    document.querySelector("#xabar").textContent =
+      "Kamera ochilmadi. Ruxsatni tekshiring.";
+  }
+}
+
+// 3D xona rejimi
+function uchDRejim() {
+
+  video.style.display = "none";
+  xona.setAttribute("visible", "true");
+
+  document.querySelector("#xabar").textContent =
+    "3D xona rejimi yoqildi.";
+}
+
+// Burish
+function burish() {
+
+  if (tanlangan) {
+
+    let r = tanlangan.getAttribute("rotation");
+
+    tanlangan.setAttribute("rotation", {
+      x: r.x,
+      y: r.y + 30,
+      z: r.z
+    });
+  }
+}
+
+// Kattalashtirish
+function kattalashtir() {
+
+  if (tanlangan) {
+
+    let s = tanlangan.getAttribute("scale");
+
+    tanlangan.setAttribute("scale", {
+      x: s.x * 1.2,
+      y: s.y * 1.2,
+      z: s.z * 1.2
+    });
+  }
+}
+
+// Kichraytirish
+function kichraytir() {
+
+  if (tanlangan) {
+
+    let s = tanlangan.getAttribute("scale");
+
+    tanlangan.setAttribute("scale", {
+      x: s.x * 0.8,
+      y: s.y * 0.8,
+      z: s.z * 0.8
+    });
+  }
+}
+
+// Tanlangan mebelni o‘chirish
+function ochirish() {
+
+  if (tanlangan) {
+
+    tanlangan.remove();
+    tanlangan = null;
+
+    document.querySelector("#xabar").textContent =
+      "Mebel o‘chirildi.";
+  }
+}
+
+// Barcha mebellarni tozalash
+function tozalash() {
+
+  sahna.querySelectorAll(".mebel").forEach(function(e) {
+    e.remove();
   });
-  video.srcObject=oqim;
-  video.style.display="block";
-  xona.setAttribute("visible","false");
-  document.querySelector("#xabar").textContent="Kamera rejimi yoqildi.";
- }catch(e){
-  document.querySelector("#xabar").textContent="Kamera ochilmadi. Ruxsatlarni tekshiring.";
- }
-}
-function uchDRejim(){
- video.style.display="none";
- xona.setAttribute("visible","true");
- document.querySelector("#xabar").textContent="3D xona rejimi yoqildi.";
-}
-function burish(){
- if(tanlangan){
-  let r=tanlangan.getAttribute("rotation");
-  tanlangan.setAttribute("rotation",{x:r.x,y:r.y+30,z:r.z});
- }
-}
-function kattalashtir(){
- if(tanlangan){
-  let s=tanlangan.getAttribute("scale");
-  tanlangan.setAttribute("scale",{x:s.x*1.2,y:s.y*1.2,z:s.z*1.2});
- }
-}
-function kichraytir(){
- if(tanlangan){
-  let s=tanlangan.getAttribute("scale");
-  tanlangan.setAttribute("scale",{x:s.x*.8,y:s.y*.8,z:s.z*.8});
- }
-}
-function ochirish(){
- if(tanlangan){tanlangan.remove();tanlangan=null;}
-}
-function tozalash(){
- sahna.querySelectorAll("a-camera + a-entity").forEach(e=>e.remove());
- sahna.querySelectorAll("a-entity[position='0 0 -3']").forEach(e=>e.remove());
- tanlangan=null;
- document.querySelector("#xabar").textContent="Mebellar tozalandi.";
+
+  tanlangan = null;
+
+  document.querySelector("#xabar").textContent =
+    "Barcha mebellar tozalandi.";
 }
 </script>
+
 </body>
 </html>
