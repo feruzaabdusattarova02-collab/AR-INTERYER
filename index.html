@@ -9,34 +9,54 @@
 
 <style>
 * { box-sizing: border-box; }
-body { margin:0; font-family:Arial,sans-serif; background:#202c38; }
-
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #202c38;
+}
 #kamera {
- position:fixed; inset:0; width:100%; height:100%;
- object-fit:cover; display:none; z-index:0;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  z-index: 0;
 }
-
 a-scene {
- position:fixed!important; inset:0;
- width:100%; height:100%; z-index:1;
+  position: fixed !important;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
-
 #panel {
- position:fixed; top:10px; left:10px; right:10px;
- z-index:5; padding:13px; text-align:center;
- background:rgba(24,35,49,.93);
- border-radius:18px; box-shadow:0 5px 20px #0005;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  max-height: 45vh;
+  overflow-y: auto;
+  z-index: 5;
+  padding: 12px;
+  text-align: center;
+  background: rgba(24,35,49,.94);
+  border-radius: 18px;
 }
-
-h2 { color:white; margin:4px 0 10px; }
-
-button {
- padding:10px 12px; margin:4px; border:0;
- border-radius:10px; background:#d5a66d;
- color:#202c38; font-weight:bold; font-size:13px;
+h2 { color: white; margin: 4px 0 10px; }
+h3 { color: #f1d2a8; margin: 10px 0 5px; font-size: 14px; }
+button, select {
+  padding: 9px 11px;
+  margin: 3px;
+  border: 0;
+  border-radius: 9px;
+  background: #d5a66d;
+  color: #202c38;
+  font-weight: bold;
+  font-size: 12px;
 }
-.mode { background:#397db9; color:white; }
-#xabar { color:white; font-size:12px; }
+.mode { background: #397db9; color: white; }
+#xabar { color: white; font-size: 12px; }
 </style>
 </head>
 
@@ -45,47 +65,64 @@ button {
 <video id="kamera" autoplay playsinline muted></video>
 
 <div id="panel">
-<h2>AR INTERYER DIZAYNI</h2>
+<h2>🏠 AR INTERYER DIZAYNI</h2>
 
 <button class="mode" onclick="kameraniYoq()">📷 Kamera</button>
 <button class="mode" onclick="uchDRejim()">🏠 3D xona</button>
-<br>
 
-<button onclick="mebel('divan')">🛋 Divan</button>
-<button onclick="mebel('stul')">🪑 Kreslo</button>
-<button onclick="mebel('stol')">🪵 Stol</button>
-<button onclick="gullarQoshish()">🌺 Gullar qo‘shish</button>
-<br>
+<h3>🛋 Mebellar</h3>
+<button onclick="modelQosh('divan')">Divan</button>
+<button onclick="modelQosh('stul')">Kreslo</button>
+<button onclick="modelQosh('stol')">Stol</button>
 
+<h3>🌸 Gullar va bezaklar</h3>
+<button onclick="gulQosh()">🌺 Gul</button>
+<button onclick="aksessuarQosh('lampa')">💡 Pol lampasi</button>
+<button onclick="aksessuarQosh('javon')">📚 Kitob javoni</button>
+<button onclick="aksessuarQosh('vaza')">🏺 Vaza</button>
+<button onclick="aksessuarQosh('rasm')">🖼 Devor rasmi</button>
+
+<h3>🎨 Xona dizayni</h3>
+<button onclick="polRang('#b99572')">Jigarrang pol</button>
+<button onclick="polRang('#d9d0c4')">Och pol</button>
+<button onclick="polRang('#777f91')">Kulrang pol</button>
+<button onclick="devorRang('#eee6dc')">Oq devor</button>
+<button onclick="devorRang('#b9cbd5')">Ko‘k devor</button>
+<button onclick="devorRang('#d7b8a0')">Bej devor</button>
+
+<h3>💡 Yorug‘lik</h3>
+<button onclick="yoruglik(0.5)">Xira</button>
+<button onclick="yoruglik(1)">O‘rtacha</button>
+<button onclick="yoruglik(1.6)">Yorqin</button>
+
+<h3>⚙️ Tanlangan obyekt</h3>
 <button onclick="burish()">↻ Burish</button>
 <button onclick="kattalashtir()">＋ Kattalashtirish</button>
 <button onclick="kichraytir()">－ Kichraytirish</button>
 <button onclick="ochirish()">✖ O‘chirish</button>
-<button onclick="tozalash()">Tozalash</button>
+<button onclick="tozalash()">Hammasini tozalash</button>
 
 <p id="xabar">Interyeringizni yarating!</p>
 </div>
 
-<a-scene embedded renderer="alpha:true; colorManagement:true"
+<a-scene embedded
+ renderer="alpha:true; colorManagement:true"
  vr-mode-ui="enabled:false">
 
  <a-entity id="xona">
   <a-sky color="#b8d2e8"></a-sky>
 
-  <!-- Pol -->
-  <a-plane rotation="-90 0 0" width="14" height="14"
-   color="#b99572"></a-plane>
+  <a-plane id="pol" rotation="-90 0 0"
+   width="14" height="14" color="#b99572"></a-plane>
 
-  <!-- Gilam -->
   <a-plane position="0 0.025 -2.8"
    rotation="-90 0 0" width="4.5" height="3"
    color="#9b7760"></a-plane>
 
-  <!-- Orqa devor -->
-  <a-box position="0 2 -5" width="12"
-   height="4" depth=".15" color="#eee6dc"></a-box>
+  <a-box id="devor" position="0 2 -5"
+   width="12" height="4" depth=".15"
+   color="#eee6dc"></a-box>
 
-  <!-- Deraza -->
   <a-box position="-2.6 2.3 -4.88"
    width="2.1" height="1.7" depth=".05"
    color="#8ac3dc"></a-box>
@@ -98,7 +135,6 @@ button {
    width="2.1" height=".06" depth=".08"
    color="white"></a-box>
 
-  <!-- Devor bezagi -->
   <a-box position="2.6 2.4 -4.88"
    width="1.4" height="1.5" depth=".08"
    color="#b68b62"></a-box>
@@ -107,8 +143,8 @@ button {
    width="1.2" height="1.3" depth=".04"
    color="#d9c3a8"></a-box>
 
-  <!-- Yorug‘lik -->
-  <a-entity light="type:ambient; intensity:1.1"></a-entity>
+  <a-entity id="yoruglik"
+   light="type:ambient; intensity:1.1"></a-entity>
   <a-entity light="type:directional; intensity:1.2"
    position="-2 5 3"></a-entity>
  </a-entity>
@@ -120,286 +156,224 @@ button {
 const sahna = document.querySelector("a-scene");
 const xona = document.querySelector("#xona");
 const video = document.querySelector("#kamera");
-
 let tanlangan = null;
 let oqim = null;
 
-// Oddiy quti yaratish
+function xabar(matn) {
+  document.querySelector("#xabar").textContent = matn;
+}
+
+function obyektYarat(joy) {
+  let e = document.createElement("a-entity");
+  e.classList.add("mebel");
+  e.setAttribute("position", joy);
+  sahna.appendChild(e);
+  tanlangan = e;
+  return e;
+}
+
 function quti(ota, joy, olcham, rang) {
- let e = document.createElement("a-box");
- e.setAttribute("position", joy);
- e.setAttribute("width", olcham[0]);
- e.setAttribute("height", olcham[1]);
- e.setAttribute("depth", olcham[2]);
- e.setAttribute("material", "color:" + rang);
- ota.appendChild(e);
- return e;
+  let e = document.createElement("a-box");
+  e.setAttribute("position", joy);
+  e.setAttribute("width", olcham[0]);
+  e.setAttribute("height", olcham[1]);
+  e.setAttribute("depth", olcham[2]);
+  e.setAttribute("color", rang);
+  ota.appendChild(e);
+  return e;
 }
 
-// Shar yaratish
-function shar(ota, joy, radius, rang, scale="1 1 1") {
- let e = document.createElement("a-sphere");
- e.setAttribute("position", joy);
- e.setAttribute("radius", radius);
- e.setAttribute("scale", scale);
- e.setAttribute("material", "color:" + rang);
- ota.appendChild(e);
- return e;
-}
-
-// Silindr yaratish
 function silindr(ota, joy, radius, balandlik, rang) {
- let e = document.createElement("a-cylinder");
- e.setAttribute("position", joy);
- e.setAttribute("radius", radius);
- e.setAttribute("height", balandlik);
- e.setAttribute("material", "color:" + rang);
- ota.appendChild(e);
- return e;
+  let e = document.createElement("a-cylinder");
+  e.setAttribute("position", joy);
+  e.setAttribute("radius", radius);
+  e.setAttribute("height", balandlik);
+  e.setAttribute("color", rang);
+  ota.appendChild(e);
+  return e;
 }
 
-// Barg yaratish
-function barg(ota, joy, rang, burilish="0 0 0") {
- let e = document.createElement("a-sphere");
- e.setAttribute("position", joy);
- e.setAttribute("scale", "0.18 0.48 0.09");
- e.setAttribute("rotation", burilish);
- e.setAttribute("material", "color:" + rang);
- ota.appendChild(e);
- return e;
+function shar(ota, joy, radius, rang) {
+  let e = document.createElement("a-sphere");
+  e.setAttribute("position", joy);
+  e.setAttribute("radius", radius);
+  e.setAttribute("color", rang);
+  ota.appendChild(e);
+  return e;
 }
 
-// Gul tuvagi
-function tuvak(ota) {
- silindr(ota, "0 0.25 0", 0.27, 0.5, "#ad6545");
- silindr(ota, "0 0.51 0", 0.29, 0.07, "#75442e");
+// GLB formatidagi mebellar
+function modelQosh(tur) {
+  const joylar = {
+    divan: "-1.2 0 -3",
+    stul: "1.1 0 -2",
+    stol: "-0.5 0 -1.7"
+  };
+
+  const fayllar = {
+    divan: "assets/models/divan.glb",
+    stul: "assets/models/stul.glb",
+    stol: "assets/models/stol.glb"
+  };
+
+  let e = obyektYarat(joylar[tur]);
+  e.setAttribute("gltf-model", fayllar[tur]);
+  e.setAttribute("scale", "0.8 0.8 0.8");
+
+  e.addEventListener("model-loaded", function() {
+    xabar(tur + " modeli qo‘shildi!");
+  });
+
+  e.addEventListener("model-error", function() {
+    xabar(tur + " modeli yuklanmadi. GLB fayl nomini tekshiring.");
+  });
 }
 
-// 1. Palma guli
-function palma(ota) {
- tuvak(ota);
+// Gul va tuvak
+function gulQosh() {
+  let e = obyektYarat("-2 0 -2");
+  silindr(e, "0 0.25 0", 0.25, 0.5, "#ad6545");
+  silindr(e, "0 0.8 0", 0.045, 0.7, "#39804a");
 
- silindr(ota, "0 1.05 0", 0.07, 1.1, "#79502f");
-
- for(let i=0;i<9;i++) {
-  let a=i*Math.PI*2/9;
-  let x=Math.cos(a)*0.38;
-  let z=Math.sin(a)*0.38;
-  barg(ota, x+" 1.55 "+z, "#27834b",
-   "0 "+(-a*180/Math.PI)+" "+(i%2===0?35:-35));
- }
-}
-
-// 2. Kaktus
-function kaktus(ota) {
- tuvak(ota);
-
- silindr(ota, "0 1.05 0", 0.19, 1.2, "#3c9b55");
- silindr(ota, "0.24 1.1 0", 0.09, 0.65, "#31934e");
- silindr(ota, "0.35 1.4 0", 0.09, 0.3, "#31934e");
- silindr(ota, "-0.24 0.9 0", 0.09, 0.5, "#31934e");
- silindr(ota, "-0.35 1.13 0", 0.09, 0.3, "#31934e");
-
- shar(ota, "0 1.68 0", 0.19, "#4cab61");
-}
-
-// 3. Rangli gul
-function rangliGul(ota) {
- tuvak(ota);
-
- for(let i=0;i<3;i++) {
-  let y=0.8+i*0.28;
-  let x=(i-1)*0.28;
-  silindr(ota, x+" "+y+" 0", 0.025, 0.7, "#39804a");
-
-  let ranglar=["#ed6a9a","#f5b942","#a77be8"];
-  let rang=ranglar[i];
-
-  for(let j=0;j<6;j++) {
-   let a=j*Math.PI/3;
-   let px=x+Math.cos(a)*0.16;
-   let pz=Math.sin(a)*0.16;
-   shar(ota, px+" "+(y+0.4)+" "+pz,
-    0.11, rang, "1 1.2 0.7");
+  for(let i=0; i<6; i++) {
+    let a = i * Math.PI / 3;
+    let x = Math.cos(a) * 0.18;
+    let z = Math.sin(a) * 0.18;
+    shar(e, x + " 1.2 " + z, 0.13, "#ed6a9a");
   }
 
-  shar(ota, x+" "+(y+0.4)+" 0", 0.09, "#f6d44b");
- }
+  shar(e, "0 1.2 0", 0.1, "#f5d34b");
+  xabar("Gul qo‘shildi!");
 }
 
-// 4. Katta bargli xona guli
-function kattaBarg(ota) {
- tuvak(ota);
+// Qo‘shimcha bezaklar
+function aksessuarQosh(tur) {
+  let e;
 
- silindr(ota, "0 0.8 0", 0.04, 0.65, "#36804b");
+  if(tur === "lampa") {
+    e = obyektYarat("2 0 -3");
+    silindr(e, "0 1 0", 0.045, 2, "#51483e");
+    silindr(e, "0 0.12 0", 0.35, 0.2, "#51483e");
+    shar(e, "0 2.05 0", 0.3, "#f6d77a");
+    e.setAttribute("light", "type:point; intensity:0.7; distance:5");
+  }
 
- for(let i=0;i<8;i++) {
-  let a=i*Math.PI/4;
-  let x=Math.cos(a)*0.3;
-  let z=Math.sin(a)*0.3;
-  barg(ota, x+" 1.05 "+z, "#237b43",
-   "0 "+(-a*180/Math.PI)+" 25");
- }
+  if(tur === "javon") {
+    e = obyektYarat("3 0 -4");
+    quti(e, "0 1 0", [1.2,2,.4], "#805638");
+    quti(e, "0 .5 .23", [1.1,.08,.05], "#d3a66e");
+    quti(e, "0 1 .23", [1.1,.08,.05], "#d3a66e");
+    quti(e, "0 1.5 .23", [1.1,.08,.05], "#d3a66e");
+  }
 
- barg(ota, "0 1.3 0", "#3b9c50");
+  if(tur === "vaza") {
+    e = obyektYarat("0 0 -1.5");
+    silindr(e, "0 .35 0", .2, .7, "#4c8b91");
+    shar(e, "0 .72 0", .18, "#4c8b91");
+    silindr(e, "0 1.1 0", .025, .8, "#39804a");
+    shar(e, "0 1.5 0", .16, "#e8a0ad");
+  }
+
+  if(tur === "rasm") {
+    e = obyektYarat("2 2.3 -4.7");
+    quti(e, "0 0 0", [1.2,1.1,.08], "#855b38");
+    quti(e, "0 0 .05", [1,.9,.03], "#7db3c4");
+    shar(e, "0 .1 .09", .2, "#f0cf78");
+  }
+
+  xabar("Bezak qo‘shildi!");
 }
 
-// 5. Sukulent
-function sukulent(ota) {
- tuvak(ota);
-
- for(let i=0;i<12;i++) {
-  let a=i*Math.PI*2/12;
-  let x=Math.cos(a)*0.22;
-  let z=Math.sin(a)*0.22;
-  barg(ota, x+" 0.82 "+z, "#6caa7b",
-   "0 "+(-a*180/Math.PI)+" 55");
- }
-
- shar(ota, "0 0.95 0", 0.2, "#8bc58e");
+// Ranglarni o‘zgartirish
+function polRang(rang) {
+  document.querySelector("#pol").setAttribute("color", rang);
+  xabar("Pol rangi o‘zgartirildi!");
 }
 
-// Mebel qo‘shish
-function mebel(tur) {
- let ota=document.createElement("a-entity");
- ota.classList.add("mebel");
-
- const joylar={
-  divan:"-1.2 0 -3",
-  stol:"-0.5 0 -1.7",
-  stul:"1.1 0 -2"
- };
-
- ota.setAttribute("position", joylar[tur]);
- sahna.appendChild(ota);
- tanlangan=ota;
-
- if(tur==="divan") {
-  quti(ota,"0 0.55 0",[1.9,.5,.85],"#426f91");
-  quti(ota,"0 1 -0.34",[1.9,.85,.2],"#315875");
-  quti(ota,"-.88 .78 0",[.22,.55,.85],"#315875");
-  quti(ota,".88 .78 0",[.22,.55,.85],"#315875");
-  quti(ota,"-.48 .84 -.12",[.62,.2,.55],"#e9d5bd");
-  quti(ota,".48 .84 -.12",[.62,.2,.55],"#e9d5bd");
-  quti(ota,"-.7 .18 .28",[.12,.36,.12],"#493b34");
-  quti(ota,".7 .18 .28",[.12,.36,.12],"#493b34");
- }
-
- if(tur==="stul") {
-  quti(ota,"0 .65 0",[.9,.18,.8],"#bd8c5a");
-  quti(ota,"0 1 -.32",[.9,.85,.14],"#8e5938");
-  quti(ota,"-.36 .3 .28",[.12,.6,.12],"#62432f");
-  quti(ota,".36 .3 .28",[.12,.6,.12],"#62432f");
-  quti(ota,"-.36 .3 -.28",[.12,.6,.12],"#62432f");
-  quti(ota,".36 .3 -.28",[.12,.6,.12],"#62432f");
-  quti(ota,"0 .78 .02",[.65,.13,.6],"#e7c7a5");
- }
-
- if(tur==="stol") {
-  quti(ota,"0 .95 0",[1.6,.16,1],"#85502d");
-  quti(ota,"-.65 .48 -.35",[.13,.9,.13],"#543923");
-  quti(ota,".65 .48 -.35",[.13,.9,.13],"#543923");
-  quti(ota,"-.65 .48 .35",[.13,.9,.13],"#543923");
-  quti(ota,".65 .48 .35",[.13,.9,.13],"#543923");
- }
-
- document.querySelector("#xabar").textContent="Mebel qo‘shildi!";
+function devorRang(rang) {
+  document.querySelector("#devor").setAttribute("color", rang);
+  xabar("Devor rangi o‘zgartirildi!");
 }
 
-// Har xil gullarni birgalikda joylashtirish
-function gullarQoshish() {
- const gullar=[
-  {nom:"palma", joy:"-3 0 -3"},
-  {nom:"kaktus", joy:"3 0 -3.5"},
-  {nom:"rangli", joy:"-2.8 0 -1.5"},
-  {nom:"barg", joy:"2.8 0 -1.5"},
-  {nom:"sukulent", joy:"0 0 -4.3"}
- ];
-
- gullar.forEach(function(g) {
-  let ota=document.createElement("a-entity");
-  ota.classList.add("mebel");
-  ota.setAttribute("position",g.joy);
-  sahna.appendChild(ota);
-
-  if(g.nom==="palma") palma(ota);
-  if(g.nom==="kaktus") kaktus(ota);
-  if(g.nom==="rangli") rangliGul(ota);
-  if(g.nom==="barg") kattaBarg(ota);
-  if(g.nom==="sukulent") sukulent(ota);
-
-  tanlangan=ota;
- });
-
- document.querySelector("#xabar").textContent=
-  "5 xil gul xonaga joylashtirildi!";
+// Yorug‘likni sozlash
+function yoruglik(daraja) {
+  document.querySelector("#yoruglik")
+    .setAttribute("light", "type:ambient; intensity:" + daraja);
+  xabar("Yorug‘lik sozlandi!");
 }
 
 // Kamera
 async function kameraniYoq() {
- try {
-  oqim=await navigator.mediaDevices.getUserMedia({
-   video:{facingMode:{ideal:"environment"}},
-   audio:false
-  });
+  try {
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      xabar("Kamera uchun HTTPS orqali oching.");
+      return;
+    }
 
-  video.srcObject=oqim;
-  video.style.display="block";
-  xona.setAttribute("visible","false");
+    oqim = await navigator.mediaDevices.getUserMedia({
+      video: {facingMode: {ideal:"environment"}},
+      audio: false
+    });
 
-  document.querySelector("#xabar").textContent="Kamera yoqildi!";
- } catch(e) {
-  document.querySelector("#xabar").textContent=
-   "Kamera ochilmadi. Ruxsatni tekshiring.";
- }
+    video.srcObject = oqim;
+    video.style.display = "block";
+    xona.setAttribute("visible", "false");
+    xabar("Kamera yoqildi. Bu rejimda obyektlar kamera ustida ko‘rinadi.");
+  } catch(e) {
+    xabar("Kamera ochilmadi. Ruxsatni tekshiring.");
+  }
 }
 
 // 3D xona
 function uchDRejim() {
- video.style.display="none";
- xona.setAttribute("visible","true");
- document.querySelector("#xabar").textContent="3D xona rejimi!";
+  video.style.display = "none";
+  xona.setAttribute("visible", "true");
+
+  if(oqim) {
+    oqim.getTracks().forEach(track => track.stop());
+    oqim = null;
+  }
+
+  xabar("3D xona rejimi!");
 }
 
-// Burish
+// Tanlangan obyektni boshqarish
 function burish() {
- if(!tanlangan) return;
- let r=tanlangan.getAttribute("rotation");
- tanlangan.setAttribute("rotation",
-  {x:r.x,y:r.y+30,z:r.z});
+  if(!tanlangan) return;
+  let r = tanlangan.getAttribute("rotation");
+  tanlangan.setAttribute("rotation", {
+    x:r.x, y:r.y+30, z:r.z
+  });
 }
 
-// Kattalashtirish
 function kattalashtir() {
- if(!tanlangan) return;
- let s=tanlangan.getAttribute("scale");
- tanlangan.setAttribute("scale",
-  {x:s.x*1.2,y:s.y*1.2,z:s.z*1.2});
+  if(!tanlangan) return;
+  let s = tanlangan.getAttribute("scale");
+  tanlangan.setAttribute("scale", {
+    x:s.x*1.2, y:s.y*1.2, z:s.z*1.2
+  });
 }
 
-// Kichraytirish
 function kichraytir() {
- if(!tanlangan) return;
- let s=tanlangan.getAttribute("scale");
- tanlangan.setAttribute("scale",
-  {x:s.x*.8,y:s.y*.8,z:s.z*.8});
+  if(!tanlangan) return;
+  let s = tanlangan.getAttribute("scale");
+  tanlangan.setAttribute("scale", {
+    x:s.x*.8, y:s.y*.8, z:s.z*.8
+  });
 }
 
-// O‘chirish
 function ochirish() {
- if(tanlangan) {
-  tanlangan.remove();
-  tanlangan=null;
-  document.querySelector("#xabar").textContent="O‘chirildi!";
- }
+  if(tanlangan) {
+    tanlangan.remove();
+    tanlangan = null;
+    xabar("Obyekt o‘chirildi!");
+  }
 }
 
-// Barcha mebellarni o‘chirish
 function tozalash() {
- sahna.querySelectorAll(".mebel").forEach(e=>e.remove());
- tanlangan=null;
- document.querySelector("#xabar").textContent=
-  "Barcha mebellar tozalandi!";
+  sahna.querySelectorAll(".mebel").forEach(e => e.remove());
+  tanlangan = null;
+  xabar("Barcha qo‘shilgan obyektlar o‘chirildi!");
 }
 </script>
 
