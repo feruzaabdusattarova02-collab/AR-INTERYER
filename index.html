@@ -1,26 +1,396 @@
-<!-- Divan -->
-<a-entity
-    id="divan"
-    gltf-model="url(./divan.glb)"
-    position="-1.35 0 -3.1"
-    rotation="0 0 0"
-    scale="0.75 0.75 0.75">
-</a-entity>
 
-<!-- Stol -->
-<a-entity
-    id="stol"
-    gltf-model="url(./stol.glb)"
-    position="0 0 -1.65"
-    rotation="0 0 0"
-    scale="0.65 0.65 0.65">
-</a-entity>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AR Interyer Dizayni</title>
 
-<!-- Kreslo -->
-<a-entity
-    id="kreslo"
-    gltf-model="url(./stul.glb)"
-    position="1.45 0 -2.65"
-    rotation="0 55 0"
-    scale="0.65 0.65 0.65">
-</a-entity>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #eaf2ff;
+            text-align: center;
+        }
+
+        h1 {
+            color: darkblue;
+            margin: 15px 5px;
+        }
+
+        .panel {
+            position: relative;
+            z-index: 5;
+            padding: 10px;
+            background: white;
+        }
+
+        button {
+            padding: 10px 14px;
+            margin: 5px;
+            border: none;
+            border-radius: 8px;
+            background: #245da8;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #153d73;
+        }
+
+        #holat {
+            position: relative;
+            z-index: 5;
+            padding: 8px;
+            color: #183b70;
+            background: white;
+        }
+
+        a-scene {
+            width: 100%;
+            height: 70vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        #kameraVideo {
+            display: none;
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>AR Interyer Dizayni</h1>
+
+<div class="panel">
+    <button onclick="kameraniYoqish()">Kamerani yoqish</button>
+    <button onclick="aylantir()">Mebellarni aylantirish</button>
+    <button onclick="kattalashtir()">Kattalashtirish</button>
+    <button onclick="kichraytir()">Kichraytirish</button>
+    <button onclick="qaytaTiklash()">Qayta tiklash</button>
+</div>
+
+<div id="holat">Modellar yuklanmoqda...</div>
+
+<video id="kameraVideo" autoplay playsinline muted></video>
+
+<a-scene
+    embedded
+    renderer="alpha: true; colorManagement: true"
+    vr-mode-ui="enabled: false">
+
+    <!-- Pol -->
+    <a-plane
+        position="0 0 0"
+        rotation="-90 0 0"
+        width="14"
+        height="14"
+        color="#d8c5a8">
+    </a-plane>
+
+    <!-- Orqa devor -->
+    <a-box
+        position="0 2 -5"
+        width="12"
+        height="4"
+        depth="0.15"
+        color="#f3eee5">
+    </a-box>
+
+    <!-- Gilam -->
+    <a-plane
+        position="0 0.025 -2.7"
+        rotation="-90 0 0"
+        width="5"
+        height="3.5"
+        color="#a99a9a">
+    </a-plane>
+
+    <!-- Deraza -->
+    <a-box
+        position="-2.8 2.3 -4.88"
+        width="2.2"
+        height="1.5"
+        depth="0.04"
+        color="#8cc9e8">
+    </a-box>
+
+    <!-- Divan -->
+    <a-entity
+        id="divan"
+        gltf-model="url(./divan.glb)"
+        position="-1.3 0 -3.2"
+        rotation="0 0 0">
+    </a-entity>
+
+    <!-- Stol -->
+    <a-entity
+        id="stol"
+        gltf-model="url(./stol.glb)"
+        position="0 0 -1.7"
+        rotation="0 0 0">
+    </a-entity>
+
+    <!-- Kreslo: stolga qaragan -->
+    <a-entity
+        id="kreslo"
+        gltf-model="url(./stul.glb)"
+        position="1.5 0 -2.7"
+        rotation="0 -90 0">
+    </a-entity>
+
+    <!-- O'simlik -->
+    <a-entity position="-3.5 0 -3.8">
+        <a-cylinder
+            position="0 0.2 0"
+            radius="0.25"
+            height="0.4"
+            color="#a66b42">
+        </a-cylinder>
+
+        <a-cylinder
+            position="0 0.8 0"
+            radius="0.06"
+            height="1.2"
+            color="#397d42">
+        </a-cylinder>
+
+        <a-sphere
+            position="0 1.5 0"
+            radius="0.5"
+            color="#32834a">
+        </a-sphere>
+
+        <a-sphere
+            position="-0.3 1.2 0"
+            radius="0.35"
+            color="#3b9953">
+        </a-sphere>
+
+        <a-sphere
+            position="0.3 1.2 0"
+            radius="0.35"
+            color="#3b9953">
+        </a-sphere>
+    </a-entity>
+
+    <!-- Ikkinchi o'simlik -->
+    <a-entity position="3.5 0 -3.8">
+        <a-cylinder
+            position="0 0.2 0"
+            radius="0.25"
+            height="0.4"
+            color="#a66b42">
+        </a-cylinder>
+
+        <a-cylinder
+            position="0 0.7 0"
+            radius="0.12"
+            height="1"
+            color="#278344">
+        </a-cylinder>
+
+        <a-sphere
+            position="0 1.3 0"
+            radius="0.4"
+            color="#278344">
+        </a-sphere>
+    </a-entity>
+
+    <!-- Yorug'lik -->
+    <a-light type="ambient" intensity="0.9"></a-light>
+
+    <a-light
+        type="directional"
+        position="-2 5 3"
+        intensity="0.8">
+    </a-light>
+
+    <!-- Kamera -->
+    <a-camera position="0 1.6 0"></a-camera>
+
+</a-scene>
+
+<script>
+    const boshlangich = {
+        divan: {
+            position: "-1.3 0 -3.2",
+            rotation: "0 0 0",
+            size: 2.4
+        },
+        stol: {
+            position: "0 0 -1.7",
+            rotation: "0 0 0",
+            size: 1.3
+        },
+        kreslo: {
+            position: "1.5 0 -2.7",
+            rotation: "0 -90 0",
+            size: 1.1
+        }
+    };
+
+    const modellar = ["divan", "stol", "kreslo"];
+    let masshtab = 1;
+
+    // GLB modellar o'lchamini avtomatik moslashtirish
+    function modelniMoslash(id) {
+        const entity = document.getElementById(id);
+        const mesh = entity.getObject3D("mesh");
+
+        if (!mesh) return;
+
+        mesh.updateMatrixWorld(true);
+
+        const box = new THREE.Box3().setFromObject(mesh);
+        const size = new THREE.Vector3();
+        box.getSize(size);
+
+        const engKatta = Math.max(size.x, size.y, size.z);
+
+        if (!engKatta || !isFinite(engKatta)) {
+            console.error(id + " modelining o'lchami aniqlanmadi");
+            return;
+        }
+
+        const kerakli = boshlangich[id].size;
+        const koeffitsiyent = kerakli / engKatta;
+
+        mesh.scale.multiplyScalar(koeffitsiyent);
+        mesh.updateMatrixWorld(true);
+
+        const yangiBox = new THREE.Box3().setFromObject(mesh);
+        const markaz = new THREE.Vector3();
+        yangiBox.getCenter(markaz);
+
+        // Modelni markazga keltirish va polga tushirish
+        mesh.position.x -= markaz.x;
+        mesh.position.y -= yangiBox.min.y;
+        mesh.position.z -= markaz.z;
+
+        mesh.updateMatrixWorld(true);
+
+        entity.dataset.yuklandi = "ha";
+        holatniYangilash();
+    }
+
+    function holatniYangilash() {
+        const tayyor = modellar.filter(function(id) {
+            return document.getElementById(id).dataset.yuklandi === "ha";
+        }).length;
+
+        document.getElementById("holat").textContent =
+            "Yuklangan modellar: " + tayyor + " / 3";
+    }
+
+    // Modellar yuklanishini tekshirish
+    modellar.forEach(function(id) {
+        const entity = document.getElementById(id);
+
+        entity.addEventListener("model-loaded", function() {
+            modelniMoslash(id);
+        });
+
+        entity.addEventListener("model-error", function(event) {
+            console.error(id + " yuklanmadi:", event.detail);
+            document.getElementById("holat").textContent =
+                id + " modeli yuklanmadi. Fayl manzilini tekshiring.";
+        });
+    });
+
+    // Mebellarni aylantirish
+    function aylantir() {
+        modellar.forEach(function(id) {
+            const entity = document.getElementById(id);
+            const r = entity.getAttribute("rotation");
+
+            entity.setAttribute("rotation", {
+                x: r.x,
+                y: r.y + 15,
+                z: r.z
+            });
+        });
+    }
+
+    // Kattalashtirish
+    function kattalashtir() {
+        masshtab += 0.1;
+        masshtabniOzgartirish();
+    }
+
+    // Kichraytirish
+    function kichraytir() {
+        masshtab = Math.max(0.3, masshtab - 0.1);
+        masshtabniOzgartirish();
+    }
+
+    function masshtabniOzgartirish() {
+        modellar.forEach(function(id) {
+            const entity = document.getElementById(id);
+            const s = boshlangich[id].size === 2.4 ? 1 : 1;
+
+            entity.object3D.scale.setScalar(masshtab);
+        });
+    }
+
+    // Dastlabki holatga qaytarish
+    function qaytaTiklash() {
+        masshtab = 1;
+
+        modellar.forEach(function(id) {
+            const entity = document.getElementById(id);
+            const data = boshlangich[id];
+
+            entity.setAttribute("position", data.position);
+            entity.setAttribute("rotation", data.rotation);
+            entity.object3D.scale.set(1, 1, 1);
+        });
+    }
+
+    // Telefon kamerasini yoqish
+    let kameraOqimi = null;
+
+    function kameraniYoqish() {
+        if (!navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia) {
+            alert("Kamera uchun HTTPS orqali oching.");
+            return;
+        }
+
+        navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" },
+            audio: false
+        })
+        .then(function(oqim) {
+            kameraOqimi = oqim;
+
+            const video = document.getElementById("kameraVideo");
+            video.srcObject = oqim;
+            video.style.display = "block";
+
+            document.getElementById("holat").textContent =
+                "Kamera yoqildi.";
+        })
+        .catch(function(xato) {
+            alert("Kameraga ruxsat berilmadi: " + xato.message);
+        });
+    }
+</script>
+
+</body>
+</html>
