@@ -1,1 +1,2 @@
-3D mebel modellari
+3D modellar shu papkaga joylanadi
+
