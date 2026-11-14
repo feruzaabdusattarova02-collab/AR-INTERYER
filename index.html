@@ -9,10 +9,6 @@
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -21,16 +17,13 @@
         }
 
         h1 {
-            color: darkblue;
-            padding: 12px;
-            margin: 0;
+            color: #183b70;
+            padding: 10px;
         }
 
         .panel {
-            background: white;
             padding: 10px;
-            position: relative;
-            z-index: 10;
+            background: white;
         }
 
         button {
@@ -47,27 +40,9 @@
             background: #153d73;
         }
 
-        #holat {
-            padding: 10px;
-            color: darkblue;
-            background: white;
-            position: relative;
-            z-index: 10;
-        }
-
         a-scene {
             width: 100%;
             height: 70vh;
-        }
-
-        #kameraVideo {
-            display: none;
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
         }
     </style>
 </head>
@@ -84,21 +59,14 @@
     <button onclick="qaytaTiklash()">Qayta tiklash</button>
 </div>
 
-<div id="holat">Modellar yuklanmoqda...</div>
-
-<video id="kameraVideo" autoplay playsinline muted></video>
-
-<a-scene
-    embedded
-    renderer="alpha: true; colorManagement: true"
+<a-scene embedded
+    renderer="colorManagement: true"
     vr-mode-ui="enabled: false">
 
-    <!-- Osmon -->
     <a-sky color="#c8dced"></a-sky>
 
     <!-- Pol -->
     <a-plane
-        position="0 0 0"
         rotation="-90 0 0"
         width="14"
         height="14"
@@ -114,148 +82,77 @@
         color="#f3eee5">
     </a-box>
 
-    <!-- Chap devor -->
-    <a-box
-        position="-6 2 -0.5"
-        width="0.15"
-        height="4"
-        depth="9"
-        color="#eee7dc">
-    </a-box>
-
-    <!-- O'ng devor -->
-    <a-box
-        position="6 2 -0.5"
-        width="0.15"
-        height="4"
-        depth="9"
-        color="#eee7dc">
-    </a-box>
-
     <!-- Gilam -->
     <a-plane
-        position="0 0.025 -2.7"
+        position="0 0.02 -2.7"
         rotation="-90 0 0"
         width="5"
         height="3.5"
-        color="#a99a9a">
+        color="#b7a0a0">
     </a-plane>
 
     <!-- Deraza -->
-    <a-box
-        position="-2.8 2.3 -4.88"
-        width="2.2"
-        height="1.5"
-        depth="0.04"
+    <a-box position="-2.8 2.3 -4.88"
+        width="2.2" height="1.5" depth="0.05"
         color="#8cc9e8">
     </a-box>
 
-    <!-- Deraza ramkasi -->
-    <a-box
-        position="-2.8 2.3 -4.84"
-        width="0.08"
-        height="1.5"
-        depth="0.06"
-        color="#ffffff">
-    </a-box>
-
-    <a-box
-        position="-2.8 2.3 -4.84"
-        width="2.2"
-        height="0.08"
-        depth="0.06"
-        color="#ffffff">
-    </a-box>
-
-    <!-- DIVAN -->
-    <a-entity
-        id="divan"
-        gltf-model="url(./divan.glb)"
-        position="-1.7 0 -3.6"
-        rotation="0 0 0">
+    <!-- Divan -->
+    <a-entity id="divan"
+        gltf-model="url(divan.glb)"
+        position="-1.35 0 -3.1"
+        rotation="0 0 0"
+        scale="0.75 0.75 0.75">
     </a-entity>
 
-    <!-- STOL -->
-    <a-entity
-        id="stol"
-        gltf-model="url(./stol.glb)"
-        position="0 0 -1.8"
-        rotation="0 0 0">
+    <!-- Stol: oldinroqda -->
+    <a-entity id="stol"
+        gltf-model="url(stol.glb)"
+        position="0 0 -1.65"
+        rotation="0 0 0"
+        scale="0.65 0.65 0.65">
     </a-entity>
 
-    <!-- KRESLO -->
-    <a-entity
-        id="kreslo"
-        gltf-model="url(./stul.glb)"
-        position="1.7 0 -2.8"
-        rotation="0 90 0">
+    <!-- Kreslo: stolga qaragan -->
+    <a-entity id="kreslo"
+        gltf-model="url(stul.glb)"
+        position="1.45 0 -2.65"
+        rotation="0 55 0"
+        scale="0.65 0.65 0.65">
     </a-entity>
 
-    <!-- PALMA -->
-    <a-entity position="-4 0 -3.8">
-        <a-cylinder
-            position="0 0.2 0"
-            radius="0.25"
-            height="0.4"
-            color="#a66b42">
-        </a-cylinder>
-
-        <a-cylinder
-            position="0 1 0"
-            radius="0.06"
-            height="1.5"
-            color="#397d42">
-        </a-cylinder>
-
-        <a-sphere
-            position="0 1.7 0"
-            radius="0.45"
-            color="#32834a">
-        </a-sphere>
-
-        <a-sphere
-            position="-0.3 1.5 0"
-            radius="0.3"
-            color="#3b9953">
-        </a-sphere>
-
-        <a-sphere
-            position="0.3 1.5 0"
-            radius="0.3"
-            color="#3b9953">
-        </a-sphere>
+    <!-- O'simliklar -->
+    <a-entity position="-3.5 0 -3.8">
+        <a-cylinder position="0 0.2 0"
+            radius="0.25" height="0.4"
+            color="#a66b42"></a-cylinder>
+        <a-cylinder position="0 1 0"
+            radius="0.06" height="1.3"
+            color="#397d42"></a-cylinder>
+        <a-sphere position="0 1.5 0"
+            radius="0.5" color="#32834a"></a-sphere>
+        <a-sphere position="-0.3 1.2 0"
+            radius="0.35" color="#3b9953"></a-sphere>
+        <a-sphere position="0.3 1.2 0"
+            radius="0.35" color="#3b9953"></a-sphere>
     </a-entity>
 
-    <!-- KAKTUS -->
-    <a-entity position="4 0 -3.8">
-        <a-cylinder
-            position="0 0.2 0"
-            radius="0.25"
-            height="0.4"
-            color="#a66b42">
-        </a-cylinder>
-
-        <a-cylinder
-            position="0 0.8 0"
-            radius="0.13"
-            height="1.2"
-            color="#278344">
-        </a-cylinder>
-
-        <a-sphere
-            position="0 1.4 0"
-            radius="0.3"
-            color="#278344">
-        </a-sphere>
+    <a-entity position="3.5 0 -3.8">
+        <a-cylinder position="0 0.2 0"
+            radius="0.25" height="0.4"
+            color="#a66b42"></a-cylinder>
+        <a-cylinder position="0 0.8 0"
+            radius="0.12" height="1.2"
+            color="#278344"></a-cylinder>
+        <a-sphere position="0 1.4 0"
+            radius="0.35" color="#278344"></a-sphere>
     </a-entity>
 
     <!-- Yorug'lik -->
-    <a-light type="ambient" intensity="0.9"></a-light>
-
-    <a-light
-        type="directional"
+    <a-light type="ambient" intensity="0.8"></a-light>
+    <a-light type="directional"
         position="-2 5 3"
-        intensity="0.8">
+        intensity="0.7">
     </a-light>
 
     <!-- Kamera -->
@@ -264,198 +161,104 @@
 </a-scene>
 
 <script>
-    const mebellar = ["divan", "stol", "kreslo"];
-
-    const boshlangich = {
-        divan: {
-            position: "-1.7 0 -3.6",
-            rotation: "0 0 0",
-            olcham: 2.2
-        },
-
-        stol: {
-            position: "0 0 -1.8",
-            rotation: "0 0 0",
-            olcham: 1.0
-        },
-
-        kreslo: {
-            position: "1.7 0 -2.8",
-            rotation: "0 90 0",
-            olcham: 1.0
-        }
-    };
-
+    let videoElement = null;
+    let oqim = null;
+    let aylanish = 0;
     let masshtab = 1;
 
-    // Modellarni me'yoriy o'lchamga keltirish
-    function modelniMoslash(id) {
-        const entity = document.getElementById(id);
-        const mesh = entity.getObject3D("mesh");
+    function kameraniYoqish() {
+        navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" },
+            audio: false
+        })
+        .then(function(stream) {
+            oqim = stream;
 
-        if (!mesh) return;
+            if (!videoElement) {
+                videoElement = document.createElement("video");
+                videoElement.autoplay = true;
+                videoElement.playsInline = true;
+                videoElement.muted = true;
 
-        mesh.updateMatrixWorld(true);
+                videoElement.style.position = "fixed";
+                videoElement.style.top = "0";
+                videoElement.style.left = "0";
+                videoElement.style.width = "100%";
+                videoElement.style.height = "100%";
+                videoElement.style.objectFit = "cover";
+                videoElement.style.zIndex = "-1";
 
-        const box = new THREE.Box3().setFromObject(mesh);
-        const size = new THREE.Vector3();
-
-        box.getSize(size);
-
-        const engKatta = Math.max(size.x, size.y, size.z);
-
-        if (!engKatta || !isFinite(engKatta)) {
-            console.error(id + " o'lchami aniqlanmadi");
-            return;
-        }
-
-        const kerakli = boshlangich[id].olcham;
-        const koeffitsiyent = kerakli / engKatta;
-
-        mesh.scale.multiplyScalar(koeffitsiyent);
-        mesh.updateMatrixWorld(true);
-
-        const yangiBox = new THREE.Box3().setFromObject(mesh);
-        const markaz = new THREE.Vector3();
-
-        yangiBox.getCenter(markaz);
-
-        // Modelni o'z markaziga joylashtirish
-        const mahalliyMarkaz = entity.object3D.worldToLocal(markaz.clone());
-
-        mesh.position.x -= mahalliyMarkaz.x;
-        mesh.position.z -= mahalliyMarkaz.z;
-
-        // Modelning pastki qismini polga tushirish
-        const pastkiNuqta = new THREE.Vector3(
-            markaz.x,
-            yangiBox.min.y,
-            markaz.z
-        );
-
-        const mahalliyPast = entity.object3D.worldToLocal(
-            pastkiNuqta.clone()
-        );
-
-        mesh.position.y -= mahalliyPast.y;
-
-        mesh.updateMatrixWorld(true);
-
-        entity.dataset.yuklandi = "ha";
-        holatniYangilash();
-    }
-
-    // Yuklanish holatini ko'rsatish
-    function holatniYangilash() {
-        let son = 0;
-
-        mebellar.forEach(function(id) {
-            if (document.getElementById(id).dataset.yuklandi === "ha") {
-                son++;
+                document.body.prepend(videoElement);
             }
-        });
 
-        document.getElementById("holat").textContent =
-            "Yuklangan modellar: " + son + " / 3";
+            videoElement.srcObject = stream;
+            videoElement.play();
+        })
+        .catch(function() {
+            alert("Kamerani yoqib bo'lmadi. Ruxsat berilganini tekshiring.");
+        });
     }
 
-    // GLB modellarni yuklashni kuzatish
-    mebellar.forEach(function(id) {
-        const entity = document.getElementById(id);
-
-        entity.addEventListener("model-loaded", function() {
-            modelniMoslash(id);
-        });
-
-        entity.addEventListener("model-error", function(event) {
-            console.error(id + " modeli yuklanmadi:", event.detail);
-
-            document.getElementById("holat").textContent =
-                id + " modeli yuklanmadi!";
-        });
-    });
-
-    // Aylantirish
     function aylantir() {
-        mebellar.forEach(function(id) {
-            const entity = document.getElementById(id);
-            const r = entity.getAttribute("rotation");
+        aylanish += 15;
 
-            entity.setAttribute("rotation", {
-                x: r.x,
-                y: r.y + 15,
-                z: r.z
+        ["divan", "stol", "kreslo"].forEach(function(id) {
+            let mebel = document.getElementById(id);
+            let eski = mebel.getAttribute("rotation");
+            mebel.setAttribute("rotation", {
+                x: eski.x,
+                y: eski.y + 15,
+                z: eski.z
             });
         });
     }
 
-    // Kattalashtirish
     function kattalashtir() {
-        masshtab = Math.min(1.5, masshtab + 0.1);
-        masshtabniYangilash();
+        masshtab += 0.1;
+        ["divan", "stol", "kreslo"].forEach(function(id) {
+            let mebel = document.getElementById(id);
+            let s = mebel.getAttribute("scale");
+            mebel.setAttribute("scale", {
+                x: s.x + 0.05,
+                y: s.y + 0.05,
+                z: s.z + 0.05
+            });
+        });
     }
 
-    // Kichraytirish
     function kichraytir() {
-        masshtab = Math.max(0.6, masshtab - 0.1);
-        masshtabniYangilash();
-    }
-
-    function masshtabniYangilash() {
-        mebellar.forEach(function(id) {
-            const entity = document.getElementById(id);
-
-            entity.object3D.scale.set(
-                masshtab,
-                masshtab,
-                masshtab
-            );
+        ["divan", "stol", "kreslo"].forEach(function(id) {
+            let mebel = document.getElementById(id);
+            let s = mebel.getAttribute("scale");
+            mebel.setAttribute("scale", {
+                x: Math.max(0.2, s.x - 0.05),
+                y: Math.max(0.2, s.y - 0.05),
+                z: Math.max(0.2, s.z - 0.05)
+            });
         });
     }
 
-    // Qayta tiklash
     function qaytaTiklash() {
-        masshtab = 1;
+        document.getElementById("divan").setAttribute(
+            "position", "-1.35 0 -3.1");
+        document.getElementById("divan").setAttribute(
+            "rotation", "0 0 0");
+        document.getElementById("divan").setAttribute(
+            "scale", "0.75 0.75 0.75");
 
-        mebellar.forEach(function(id) {
-            const entity = document.getElementById(id);
-            const data = boshlangich[id];
+        document.getElementById("stol").setAttribute(
+            "position", "0 0 -1.65");
+        document.getElementById("stol").setAttribute(
+            "rotation", "0 0 0");
+        document.getElementById("stol").setAttribute(
+            "scale", "0.65 0.65 0.65");
 
-            entity.setAttribute("position", data.position);
-            entity.setAttribute("rotation", data.rotation);
-
-            entity.object3D.scale.set(1, 1, 1);
-        });
-    }
-
-    // Telefon kamerasini yoqish
-    function kameraniYoqish() {
-        if (!navigator.mediaDevices ||
-            !navigator.mediaDevices.getUserMedia) {
-            alert("Kamerani ishlatish uchun HTTPS orqali oching.");
-            return;
-        }
-
-        navigator.mediaDevices.getUserMedia({
-            video: {
-                facingMode: "environment"
-            },
-            audio: false
-        })
-        .then(function(oqim) {
-            const video = document.getElementById("kameraVideo");
-
-            video.srcObject = oqim;
-            video.style.display = "block";
-
-            video.play();
-
-            document.getElementById("holat").textContent =
-                "Kamera yoqildi!";
-        })
-        .catch(function(xato) {
-            alert("Kamera ochilmadi: " + xato.message);
-        });
+        document.getElementById("kreslo").setAttribute(
+            "position", "1.45 0 -2.65");
+        document.getElementById("kreslo").setAttribute(
+            "rotation", "0 55 0");
+        document.getElementById("kreslo").setAttribute(
+            "scale", "0.65 0.65 0.65");
     }
 </script>
 
